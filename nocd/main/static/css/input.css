@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+/* 
+// Ganti settingan diatas biar dark mode nya kepake
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark, cupcake;
+}
+  */

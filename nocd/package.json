@@ -1,0 +1,22 @@
+{
+  "name": "nocd",
+  "version": "1.0.0",
+  "description": "Aplikasi Skripsi Neural Overlapping Comunity Detection (NOCD)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently -n DJANGO,TAILWIND -c blue,green \"python manage.py runserver\" \"npx @tailwindcss/cli -i ./main/static/css/input.css -o ./main/static/css/output.css --watch\""
+  },
+  "keywords": [],
+  "author": "Wijdan Akhmad S",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "daisyui": "^5.5.7"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.17",
+    "tailwindcss": "^4.1.17"
+  }
+}
