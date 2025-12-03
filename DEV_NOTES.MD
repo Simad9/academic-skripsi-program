@@ -4,7 +4,13 @@ Tujuan untuk track apa aja yang udah dilakukuan biar lebih aman aja dalam develo
 
 ## Task Date per Date
 ---
-`03/12/2025` - `1 jam 30 menit lebih sepertinya`  \
+`tanggal` - `keterangan` \
+### Task
+- [ ] todo
+### NOTES \
+- todo
+---
+`03/12/2025` - `2 jam lebih sepertinya sampai ganti hari`  \
 ### Task
 - [x] Install Django
 - [x] Setup Browser Reload
@@ -12,7 +18,8 @@ Tujuan untuk track apa aja yang udah dilakukuan biar lebih aman aja dalam develo
 - [x] Setup DaisyUI
 - [x] Setup concurrently untuk menjalankan django dan tailwind sekaligus.
 - [x] Buat Logo Aplikasi by Gemini
-- [x] Formater Djlint dan belajar mematikan linter.
+- [x] Formater Djlint dan belajar mematikan linter
+- [x] Belajar dokumentasi project
 ### Notes \
 - Udah setup django untuk FE.
 - Udah setup browser reload untuk django biar gak perlu reload reload kalo ada perubahan.
@@ -23,3 +30,4 @@ Tujuan untuk track apa aja yang udah dilakukuan biar lebih aman aja dalam develo
 - Buat logo pake gemini, terus taruh folder `temp` biar gak ilang aja.
 - Ini pake formarter `djlint`.
 - Kalo mau linternya dimatikan, kasih komentar `<!-- djlint:off -->` untuk matikan linter dan `<!-- djlint:n -->` untuk menyalakan linternya.
+- Belajar dokumentasi project python, mulai dari awal sampai install library dan jalankan aplikasi
