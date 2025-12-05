@@ -1,17 +1,23 @@
 <!-- djlint:off -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="cupcake">
   <head>
-    {% include "components/head.html" %}
+    {% include 'components/head.html' %}
     <title>
       {% block title %}
         NOCD
-      {% endblock title %}
+      {% endblock %}
     </title>
   </head>
-  <body>
-    <h1 class"btn btn-primary">Test</h1>
-    {% include "components/card.html" %}
+  <body class="bg-base-200 h-screen">
+    <main class="flex flex-col gap-[60px] mx-[120px]">
+      <nav>
+        {% include 'components/navbar.html' %}
+      </nav>
+      <section>
+        {% include "components/input_dataset.html" with data=numbers %}
+      </section>
+    </main>
   </body>
 </html>

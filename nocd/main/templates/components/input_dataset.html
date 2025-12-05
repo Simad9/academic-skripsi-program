@@ -1,0 +1,78 @@
+<!-- djlint:off -->
+
+<div class="bg-base-100 p-5 flex-col gap-4 justify-start rounded-xl">
+  <h1 class="font-montserrat font-semibold text-xl mb-3">1. Input Dataset</h1>
+  <section class="flex gap-4">
+    {% comment %}Input File & Text Area{% endcomment %}
+    <div class="w-full">
+      <div class="tabs tabs-box">
+        <input type="radio" name="inputan" class="tab" aria-label="Upload File" id="upload-file" checked="checked" />
+        <input type="radio" name="inputan" class="tab" aria-label="Input Gen" id="input-gen" />
+      </div>
+
+      <div class="flex flex-col h-[300px]">
+        {% comment %}Upload File{% endcomment %}
+        <div class="my-2 grow" hidden>
+          <fieldset class="fieldset w-full">
+            <legend class="fieldset-legend ms-2">Input File Dataset</legend>
+            <input type="file" class="file-input file-input-ghost w-full" accept=".xlsx" />
+          </fieldset>
+          <button class="btn bg-nocd text-white w-full">Proses</button>
+        </div>
+
+        {% comment %}Text Area{% endcomment %}
+        <div class="my-2 grow">
+          <fieldset class="fieldset w-full">
+            <legend class="fieldset-legend ms-2">Input Gen (max 2000 gen)</legend>
+            <textarea class="textarea h-24 rounded-xl w-full" placeholder="Cth: TP53, ABC, EDFT, ..."></textarea>
+          </fieldset>
+          <button class="btn bg-nocd text-white w-full">Proses</button>
+        </div>
+
+        {% comment %}Upload Feature Gen{% endcomment %}
+        <div class="" hidden>
+          <fieldset class="fieldset w-full">
+            <legend class="fieldset-legend ms-2">Input File Feature Gen (Opsional)</legend>
+            <input type="file" class="file-input file-input-ghost w-full" accept=".xlsx" />
+          </fieldset>
+          <button class="btn bg-nocd text-white w-full">Terapkan Sebagai Data</button>
+        </div>
+      </div>
+    </div>
+    {% comment %}Graph dan Tabel{% endcomment %}
+    <section class="w-full">
+      <div class="tabs tabs-box w-full" hidden>
+        <input type="radio" name="hasil" class="tab" aria-label="Graf" checked="checked" />
+        <div class="tab-content bg-base-100 border-base-100 p-6 mt-2">
+          <img src="https://placehold.co/600x600?text=Graph+STRINGDB" alt="Image Graph" class="rounded-lg h-[507px] w-full" />
+        </div>
+
+        <input type="radio" name="hasil" class="tab" aria-label="Tabel" />
+        <div class="tab-content bg-base-100 border-base-100 p-6 mt-2">
+          <div class="overflow-x-auto h-[507px] w-full">
+            <table class="table table-xs table-pin-rows table-pin-cols">
+              <thead>
+                <tr>
+                  <th class="w-10"></th>
+                  <td class="w-20">Node 1</td>
+                  <td class="w-20">Node 2</td>
+                  <td class="w-20">Weight</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% for num in numbers %}
+                  <tr class="p-3">
+                    <th>{{ num }}</th>
+                    <td>TP53</td>
+                    <td>ABC</td>
+                    <td>0.600</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+</div>
