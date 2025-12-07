@@ -11,12 +11,18 @@
     </title>
   </head>
   <body class="bg-base-200 h-screen">
-    <main class="flex flex-col gap-[60px] mx-[120px]">
+    <main class="flex flex-col gap-10 mx-[120px]">
       <nav>
         {% include 'components/navbar.html' %}
       </nav>
-      <section>
-        {% include "components/input_dataset.html" with data=numbers %}
+      <section id="input-dataset">
+        {% include 'components/input_dataset.html' with data=numbers %}
+      </section>
+      <section id="deteksi-komunitas" class="h-[200px] bg-blue-500">
+        <h1>Deteksi Komunitas Section</h1>
+      </section>
+      <section id="enrichment-analysis" class="h-[200px] bg-blue-400">
+        <h1>Enrichment Analysis Section</h1>
       </section>
     </main>
   </body>

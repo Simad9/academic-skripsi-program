@@ -4,13 +4,19 @@ Tujuan untuk track apa aja yang udah dilakukuan biar lebih aman aja dalam develo
 
 ## Task Date per Date
 ---
-`tanggal` - `keterangan` \
+`07/12/2025` - `Hampir 3 jam0an` 
 ### Task
-- [ ] todo
-### NOTES \
-- todo
+- [x] Gambar berhasil tampil
+- [x] Ngulik API tsv untuk dataset
+- [x] API Gambar dan API tsv untuk visualisasi kelar
+- [ ] 
+### Notes 
+- Sebenarnya lebih enak pake react sebagai FE, dan Djangonya dijadiin API, tapi yang tak lakukin gitu. FE nya jadi HTML biasa.
+- Terus setelah ngulik API untuk tsv, sebenarnya agak beda dengan yang lewat web, lebih lengkap di tsv, dan lebih kaya. Jadi pake itu aja gak papa dah.
+- Berhasil menampilkan tabel tsv dari API terus ditampilin, walau kode berantakan, dan hasilnya belum bagus
+- 
 ---
-`03/12/2025` - `2 jam lebih sepertinya sampai ganti hari`  \
+`03/12/2025` - `2 jam lebih sepertinya sampai ganti hari`  
 ### Task
 - [x] Install Django
 - [x] Setup Browser Reload
@@ -20,7 +26,7 @@ Tujuan untuk track apa aja yang udah dilakukuan biar lebih aman aja dalam develo
 - [x] Buat Logo Aplikasi by Gemini
 - [x] Formater Djlint dan belajar mematikan linter
 - [x] Belajar dokumentasi project
-### Notes \
+### Notes 
 - Udah setup django untuk FE.
 - Udah setup browser reload untuk django biar gak perlu reload reload kalo ada perubahan.
 - Udah setup tailwind juga untuk base styling dan udah berhasil ngaruh reload juga.
