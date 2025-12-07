@@ -2,52 +2,102 @@
 
 <div class="bg-base-100 p-5 flex-col gap-4 justify-start rounded-xl">
   <h1 class="font-montserrat font-semibold text-xl mb-3">1. Input Dataset</h1>
-  <section class="flex lg:gap-4 lg:flex-row flex-col">
-    
-    <!-- Input File / Text -->
-    <div class="w-full" x-data="{ file: true, textarea: false }">
-      <div class="tabs tabs-box">
-        <input type="radio" name="inputan" class="tab" aria-label="Upload File" checked @click="file = true; textarea = false;" />
-        <input type="radio" name="inputan" class="tab" aria-label="Input Gen" @click="file = false; textarea = true;" />
-      </div>
+  <section class="flex gap-4 lg:flex-row flex-col">
+    <section class="w-full">
+      <!-- Input File / Text -->
+      <div class="w-full" x-data="{ file: true, textarea: false }">
+        <div class="tabs tabs-box">
+          <input
+            type="radio"
+            name="inputan"
+            class="tab"
+            aria-label="Upload File"
+            checked
+            @click="file = true; textarea = false;"
+          />
+          <input
+            type="radio"
+            name="inputan"
+            class="tab"
+            aria-label="Input Gen"
+            @click="file = false; textarea = true;"
+          />
+        </div>
 
-      <div class="flex flex-col pb-10 lg:h-[300px] lg:pb-0">
-        
-        <!-- Upload File -->
-        <div class="my-2 grow" x-show="file">
-          <form id="upload-form" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
+        <div class="flex flex-col pb-10 lg:h-[300px] lg:pb-0">
+          <!-- Upload File -->
+          <div class="my-2 grow" x-show="file">
+            <form id="upload-form" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <fieldset class="fieldset w-full">
+                <legend class="fieldset-legend ms-2">Input File Dataset</legend>
+                <input
+                  type="file"
+                  name="file_dataset"
+                  class="file-input file-input-ghost w-full"
+                  accept=".xlsx"
+                />
+              </fieldset>
+              <button class="btn bg-nocd text-white w-full">Proses</button>
+            </form>
+          </div>
+
+          <!-- Textarea -->
+          <div class="my-2 grow" x-show="textarea">
             <fieldset class="fieldset w-full">
-              <legend class="fieldset-legend ms-2">Input File Dataset</legend>
-              <input type="file" name="file_dataset" class="file-input file-input-ghost w-full" accept=".xlsx" />
+              <legend class="fieldset-legend ms-2">
+                Input Gen (max 2000 gen)
+              </legend>
+              <textarea
+                name="textarea_dataset"
+                class="textarea h-24 rounded-xl w-full"
+                placeholder="TP53, ABC, EDFT, ..."
+              ></textarea>
             </fieldset>
             <button class="btn bg-nocd text-white w-full">Proses</button>
-          </form>
+          </div>
         </div>
-
-        <!-- Textarea -->
-        <div class="my-2 grow" x-show="textarea">
-          <fieldset class="fieldset w-full">
-            <legend class="fieldset-legend ms-2">Input Gen (max 2000 gen)</legend>
-            <textarea name="textarea_dataset" class="textarea h-24 rounded-xl w-full" placeholder="TP53, ABC, EDFT, ..."></textarea>
-          </fieldset>
-          <button class="btn bg-nocd text-white w-full">Proses</button>
-        </div>
-
       </div>
-    </div>
+
+      <!-- Input Matrix Feature -->
+      <div id="upload-feature" class="w-full hidden">
+        <fieldset class="fieldset w-full">
+          <legend class="fieldset-legend ms-2">
+            Input File Feature Gen (Opsional)
+          </legend>
+          <input
+            type="file"
+            class="file-input file-input-ghost w-full"
+            accept=".xlsx"
+          />
+        </fieldset>
+        <button class="btn bg-nocd text-white w-full">
+          Terapkan Sebagai Data
+        </button>
+      </div>
+    </section>
 
     <!-- Graph & Table -->
     <section class="w-full">
-      <div id="visual-graf" class="tabs tabs-box w-full">
-
+      <div id="visual-graf" class="tabs tabs-box w-full hidden">
         <!-- Graph -->
-        <input type="radio" name="hasil" class="tab" aria-label="Graf" checked />
+        <input
+          type="radio"
+          name="hasil"
+          class="tab"
+          aria-label="Graf"
+          checked
+        />
         <div class="tab-content bg-base-100 border-base-100 p-6 mt-2">
-          <div id="graf-wrapper" style="width:100%; height:507px; overflow:hidden;">
-            <img id="gambar-graf" 
-                 src="https://placehold.co/600x600?text=Graph+STRINGDB" 
-                 class="rounded-lg w-full h-full object-contain cursor-grab" />
+          <div
+            id="graf-wrapper"
+            style="width: 100%; height: 507px; overflow: hidden"
+          >
+            <img
+              id="gambar-graf"
+              src="https://placehold.co/600x600?text=Graph+STRINGDB"
+              class="rounded-lg w-full h-full object-contain cursor-grab"
+            />
           </div>
         </div>
 
@@ -55,22 +105,22 @@
         <input type="radio" name="hasil" class="tab" aria-label="Tabel" />
         <div class="tab-content bg-base-100 border-base-100 p-6 mt-2">
           <div class="overflow-x-auto h-[507px] w-full">
-            <table id="tabel-tsv" class="table table-xs table-pin-rows table-pin-cols">
+            <table
+              id="tabel-tsv"
+              class="table table-xs table-pin-rows table-pin-cols"
+            >
               <thead>
                 <tr>
-                  <th>                   #                  </th>
+                  <th>#</th>
                   <td>Node 1</td>
                   <td>Node 2</td>
                   <td>Combine_Score</td>
                 </tr>
               </thead>
-              <tbody>
-                
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
         </div>
-
       </div>
     </section>
   </section>
@@ -81,17 +131,20 @@
 
 <script>
   const api_url = "http://localhost:8000/";
-  const formFile = document.getElementById('upload-form');
-  const gambarGraf = document.getElementById('gambar-graf');
-  const visualGraf = document.getElementById('visual-graf');
-  const tabelTsv = document.getElementById('tabel-tsv');
-  const tbody = tabelTsv.querySelector('tbody');
-// Pindahkan inisialisasi tbody.innerHTML = '' ke dalam handler submit
-// tbody.innerHTML = ''; // <-- Hapus atau komentar baris ini!
+  const formFile = document.getElementById("upload-form");
+  const formFeature = document.getElementById("upload-feature");
 
-  let panzoom = null;
+  // untuk gambar
+  const gambarGraf = document.getElementById("gambar-graf");
+  const visualGraf = document.getElementById("visual-graf");
 
-  formFile.addEventListener('submit', async function(e) {
+  // untuk tabel
+  const tabelTsv = document.getElementById("tabel-tsv");
+  const tbody = tabelTsv.querySelector("tbody");
+
+  let panzoom = null;
+
+  formFile.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
@@ -108,6 +161,7 @@
       // Tampilkan gambar hasil STRINGDB
       gambarGraf.src = data.data.img_path;
       visualGraf.classList.remove("hidden");
+      formFeature.classList.remove("hidden");
 
       // Re-init Panzoom setiap kali gambar berubah
       if (panzoom) panzoom.destroy();
@@ -115,53 +169,53 @@
       panzoom = Panzoom(gambarGraf, {
         maxScale: 5,
         minScale: 1,
-        contain: 'outside'
+        contain: "outside",
       });
 
       // Scroll zoom
-      document.getElementById("graf-wrapper")
-              .addEventListener("wheel", panzoom.zoomWithWheel);
+      document
+        .getElementById("graf-wrapper")
+        .addEventListener("wheel", panzoom.zoomWithWheel);
 
       // Cursor handling
-      gambarGraf.addEventListener("mousedown", () => gambarGraf.style.cursor = "grabbing");
-      gambarGraf.addEventListener("mouseup", () => gambarGraf.style.cursor = "grab");
+      gambarGraf.addEventListener(
+        "mousedown",
+        () => (gambarGraf.style.cursor = "grabbing")
+      );
+      gambarGraf.addEventListener(
+        "mouseup",
+        () => (gambarGraf.style.cursor = "grab")
+      );
 
       // Tambahkan ke Tabel
-      const tableData = data.data.table_data; // <-- DEFINISI VARIABEL 'tableData' di sini
-      tbody.innerHTML = ''; // <-- Kosongkan baris lama di sini
+      const tableData = data.data.table_data; // <-- DEFINISI VARIABEL 'tableData' di sini
+      tbody.innerHTML = ""; // <-- Kosongkan baris lama di sini
 
-      if (tableData && tableData.length > 0) {
-          tableData.forEach((row, index) => {
-              const tr = document.createElement('tr');
-              
-              // 1. Kolom Nomor Urut (#)
-              const thIndex = document.createElement('th');
-              thIndex.textContent = index + 1; 
-              tr.appendChild(thIndex);
-              
-              // 2. Kolom Node 1
-              const tdNode1 = document.createElement('td');
-              tdNode1.textContent = row.Node1; // <-- PERBAIKAN! Ambil dari 'row.Node1'
-              tr.appendChild(tdNode1);
-              
-              // 3. Kolom Node 2
-              const tdNode2 = document.createElement('td');
-              tdNode2.textContent = row.Node2;
-              tr.appendChild(tdNode2);
-              
-              // 4. Kolom Weight (Combine_Score)
-              const tdWeight = document.createElement('td');
-              tdWeight.textContent = row.Combine_Score.toFixed(3); 
-              tr.appendChild(tdWeight);
+      if (tableData && tableData.length > 0) {
+        tableData.forEach((row, index) => {
+          const tr = document.createElement("tr"); // 1. Kolom Nomor Urut (#)
+          const thIndex = document.createElement("th");
+          thIndex.textContent = index + 1;
+          tr.appendChild(thIndex); // 2. Kolom Node 1
+          const tdNode1 = document.createElement("td");
+          tdNode1.textContent = row.Node1; // <-- PERBAIKAN! Ambil dari 'row.Node1'
+          tr.appendChild(tdNode1); // 3. Kolom Node 2
+          const tdNode2 = document.createElement("td");
+          tdNode2.textContent = row.Node2;
+          tr.appendChild(tdNode2); // 4. Kolom Weight (Combine_Score)
+          const tdWeight = document.createElement("td");
+          tdWeight.textContent = row.Combine_Score.toFixed(3);
+          tr.appendChild(tdWeight);
 
-              tbody.appendChild(tr);
-          });
-      } else {
-          // Tampilkan pesan jika data kosong
-          const tr = document.createElement('tr');
-          tr.innerHTML = '<td colspan="4" class="text-center">Tidak ada data interaksi yang ditemukan.</td>';
-          tbody.appendChild(tr);
-      }
-    }
-  });
+          tbody.appendChild(tr);
+        });
+      } else {
+        // Tampilkan pesan jika data kosong
+        const tr = document.createElement("tr");
+        tr.innerHTML =
+          '<td colspan="4" class="text-center">Tidak ada data interaksi yang ditemukan.</td>';
+        tbody.appendChild(tr);
+      }
+    }
+  });
 </script>
