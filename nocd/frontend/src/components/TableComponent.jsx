@@ -1,5 +1,3 @@
-import React from 'react';
-
 const TableComponent = ({ tableData }) => {
   console.log(tableData)
   return (
@@ -31,6 +29,7 @@ const TableComponent = ({ tableData }) => {
           )}
         </tbody>
       </table>
+      
     </div>
   );
 };

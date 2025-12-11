@@ -5,6 +5,16 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 
 ## Task Date per Date
 ---
+`11/12/2025` - `Lebih dari 4 jam` 
+### Task
+- [x] FE jadi React dan udah dirapikan
+- [x] npm run dev udah konek juga sama Django BE dan React FE nya
+### Notes 
+- Berhasil ubah react untuk frontend nya
+- API juga udah dipisah untuk yang gambar dan tabel, biar gak berat pas fetch nya
+- Belum diubah tapi untuk fetch isi tabelnya
+---
+---
 `07/12/2025` - `Hampir 3 jam0an` 
 ### Task
 - [x] Gambar berhasil tampil

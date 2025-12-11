@@ -7,10 +7,9 @@ from django.templatetags.static import static
 # Library
 import os
 import pandas as pd
-import time
 
 # Import dari file
-from .ml_proses.stringdb import stringdb_fetch_api_img, stringdb_data_tsv
+from .ml_proses.stringdb import stringdb_fetch_api_img
 
 def index(request):
   number_list = range(1, 30)
@@ -19,29 +18,7 @@ def index(request):
     }
   return render(request, "index.html", context)
 
-def loading(request):
-
-  return render(request, "loading.html")
-
-@csrf_exempt
-def get_processed_data(request):
-  # --- SIMULASI PEMROSESAN LAMBAT ---
-  # Tunda eksekusi selama 3 detik untuk mensimulasikan pemrosesan database/API
-  time.sleep(3) 
-  # ----------------------------------
-
-  # Data hasil yang akan dikembalikan
-  data_hasil = {
-      'status': 'success',
-      'judul': 'Data Berhasil Dimuat!',
-      'isi': 'Ini adalah konten yang dimuat setelah penundaan 3 detik. Loader sekarang seharusnya hilang.',
-      'daftar_item': ['Item 1', 'Item 2', 'Item 3', 'Item 4']
-  }
-
-  # Mengembalikan data sebagai respons JSON
-  return JsonResponse(data_hasil)
-
-
+# ==== Untuk API - Skripsi ====
 @csrf_exempt
 def stringdb_image(request):
   # Cek method POST

@@ -1,10 +1,10 @@
-// nocd/frontend/src/pages/InputDataset.jsx
+import { useState, useRef } from 'react';
 
-import React, { useState, useRef } from 'react';
-// Asumsi ImageGraph adalah path yang valid (misalnya hasil import dari src/assets)
+// Components
 import GraphVisualizer from '../components/GraphVisualizerComponent.jsx';
 import TableComponent from '../components/TableComponent.jsx';
 
+// API
 import { fetchStringDBTableData, fetchStringDBImageData } from '../api/api';
 
 export default function InputDataset() {
@@ -224,9 +224,9 @@ export default function InputDataset() {
                   <div className="overflow-x-auto h-[507px] w-full">
                     {/* Menampilkan Loader Khusus Tabel */}
                     {tableLoading && (
-                      <div className="flex justify-center items-center h-full">
-                        <span className="loading loading-spinner loading-lg"></span>
-                        <span className="skeleton skeleton-text">AI is thinking harder...</span>
+                      <div className="flex justify-center items-center h-full w-full">
+                        <span className="loading loading-spinner loading-lg me-3"></span>
+                        <span className="skeleton skeleton-text">Mengambil Data Tunggu Sebentar</span>
                       </div>
                     )}
 
@@ -239,7 +239,14 @@ export default function InputDataset() {
 
                     {/* Menampilkan Tabel jika data tersedia */}
                     {!tableLoading && !tableError && tableData && (
-                      <TableComponent tableData={tableData} />
+                      <div>
+                        <TableComponent tableData={tableData} />
+                        <div className="join">
+                          <button className="join-item btn">«</button>
+                          <button className="join-item btn">Page 1</button>
+                          <button className="join-item btn">»</button>
+                        </div>
+                      </div>
                     )}
                   </div>
                 </div>

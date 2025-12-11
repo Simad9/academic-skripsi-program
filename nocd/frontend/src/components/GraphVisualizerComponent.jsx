@@ -1,12 +1,8 @@
-// nocd/frontend/src/components/GraphVisualizer.jsx
-
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 // Hapus import PanZoom dari 'react-easy-panzoom' yang tidak digunakan
-import Panzoom from '@panzoom/panzoom'; 
+import Panzoom from '@panzoom/panzoom';
 
 const GraphVisualizer = ({ imgPath }) => {
-  console.log("GraphVisualizer menerima imgPath:", imgPath);
-
   // Ref untuk elemen <img> yang akan di-panzoom
   const imageRef = useRef(null);
   // Ref untuk Panzoom instance
@@ -23,15 +19,15 @@ const GraphVisualizer = ({ imgPath }) => {
         wrapperElement.removeEventListener("wheel", panzoomRef.current.zoomWithWheel);
       }
       // Hancurkan instance Panzoom
-      panzoomRef.current.destroy(); 
+      panzoomRef.current.destroy();
       panzoomRef.current = null;
     }
   };
 
   const initPanzoom = () => {
     // 1. Pastikan membersihkan yang lama sebelum inisialisasi yang baru
-    cleanupPanzoom(); 
-    
+    cleanupPanzoom();
+
     const currentImage = imageRef.current;
     if (currentImage) {
       // 2. Inisialisasi Panzoom pada gambar
@@ -58,17 +54,17 @@ const GraphVisualizer = ({ imgPath }) => {
 
       currentImage.addEventListener("mousedown", handleMouseDown);
       currentImage.addEventListener("mouseup", handleMouseUp);
-      
+
       // Cleanup DOM listener (harus disimpan di Ref atau dilakukan di Cleanup useEffect)
       // *Catatan: Untuk penyederhanaan, kita akan menghapus semua listener di fungsi cleanup useEffect di bawah.
     }
   };
-  
+
   // Efek utama untuk membersihkan Panzoom saat unmount atau imgPath berubah
   useEffect(() => {
     // Jalankan fungsi cleanup saat komponen di-unmount atau imgPath berubah
     return () => {
-      cleanupPanzoom(); 
+      cleanupPanzoom();
     };
   }, [imgPath]); // Dependency: Jalankan cleanup jika imgPath berubah
 
@@ -83,13 +79,13 @@ const GraphVisualizer = ({ imgPath }) => {
 
   return (
     <div id="graf-wrapper" ref={wrapperRef} style={wrapperStyle}>
-      <img 
-        id="gambar-graf" 
-        ref={imageRef} 
-        src={imgPath} 
-        alt="Hasil Graf STRINGDB" 
+      <img
+        id="gambar-graf"
+        ref={imageRef}
+        src={imgPath}
+        alt="Hasil Graf STRINGDB"
         // PENTING: Inisialisasi Panzoom HANYA setelah gambar dimuat
-        onLoad={initPanzoom} 
+        onLoad={initPanzoom}
         style={{ width: '100%', height: 'auto', display: 'block', transformOrigin: '0 0' }}
       />
     </div>
