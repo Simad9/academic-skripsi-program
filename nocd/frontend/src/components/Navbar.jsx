@@ -1,8 +1,7 @@
 export default function Navbar() {
   return (
     <>
-
-      <div className="navbar bg-base-100 shadow-sm pe-5">
+      <div className="navbar bg-base-100 border-b-2 border-nocd/50 rounded-lg mt-5 shadow-sm pe-5 ps-4">
         <div className="navbar-start">
 
           <div className="dropdown pe-5">
@@ -73,11 +72,11 @@ export default function Navbar() {
             <input
               type="checkbox"
               className="theme-controller"
-              defaultValue="business"
+              defaultValue="nord"
             />
             {/* sun icon */}
             <svg
-              className="swap-off h-8 w-8 fill-current"
+              className="swap-on h-8 w-8 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
@@ -85,7 +84,7 @@ export default function Navbar() {
             </svg>
             {/* moon icon */}
             <svg
-              className="swap-on h-8 w-8 fill-current"
+              className="swap-off h-8 w-8 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >

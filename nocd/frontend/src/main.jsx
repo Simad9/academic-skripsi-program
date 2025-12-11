@@ -6,7 +6,7 @@ import './css/input.css'
 import App from './pages/App.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App className="scroll-smooth"/>
+  <StrictMode className='bg-blue-400'>
+    <App/>
   </StrictMode>,
 )

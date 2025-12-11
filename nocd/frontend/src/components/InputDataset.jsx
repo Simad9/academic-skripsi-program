@@ -86,11 +86,11 @@ export default function InputDataset() {
   const displayImagePath = data && data.img_path ? data.img_path : "  https://placehold.co/500x500?text=No+Image+Available";
 
   return (
-    <div className="bg-base-100 p-5 flex-col gap-4 justify-start rounded-xl">
-      <h1 className="font-montserrat font-semibold text-xl mb-3">
-        1. Input Dataset
-      </h1>
-      <section className="flex gap-4 lg:flex-row flex-col">
+    <>
+      <h1 className="text-2xl font-bold font-poppins mb-5">Input Dataset</h1>
+
+      {/* Main Content */}
+      <main className="flex gap-4 lg:flex-row flex-col">
         <section className="w-full">
           {/* Input File / Text */}
           <div className="tabs tabs-box">
@@ -135,7 +135,7 @@ export default function InputDataset() {
               onChange={() => setActiveTab('text')}
             />
             <div className="tab-content bg-base-100 border-base-300 p-6">
-              <form id="input-gen-form" onSubmit={handleSubmit}>
+              {/* <form id="input-gen-form" onSubmit={handleSubmit}>
                 <fieldset className="fieldset w-full">
                   <legend className="fieldset-legend ms-2">
                     Input Gen (max 2000 gen)
@@ -151,7 +151,9 @@ export default function InputDataset() {
                 <button type="submit" className="btn bg-nocd text-white w-full mt-4" disabled={loading}>
                   {loading && activeTab === 'text' ? 'Memproses...' : 'Proses Gen'}
                 </button>
-              </form>
+              </form> */}
+
+              <h1 className='font-poppins text-xl font-semibold'>Tahap Pengembangan Selanjutnya Belum Di Integrasikan</h1>
             </div>
           </div>
 
@@ -254,10 +256,7 @@ export default function InputDataset() {
             </div>
           )}
         </section>
-      </section>
-    </div>
+      </main>
+    </>
   );
 }
-
-// Catatan: Pastikan Anda juga sudah memindahkan logika Panzoom ke GraphVisualizerComponent.jsx
-// dan logika tabel ke TableComponent.jsx seperti yang dijelaskan di jawaban sebelumnya.
