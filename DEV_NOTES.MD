@@ -1,6 +1,7 @@
 # Catatan Developer
 ---
-Tujuan untuk track apa aja yang udah dilakukuan biar lebih aman aja dalam development aplikasi ini.
+Tujuan untuk track apa aja yang udah dilakukuan biar lebih aman aja dalam development aplikasi ini.\
+Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, selain itu masuk ke log book notion.
 
 ## Task Date per Date
 ---
@@ -9,12 +10,10 @@ Tujuan untuk track apa aja yang udah dilakukuan biar lebih aman aja dalam develo
 - [x] Gambar berhasil tampil
 - [x] Ngulik API tsv untuk dataset
 - [x] API Gambar dan API tsv untuk visualisasi kelar
-- [ ] 
 ### Notes 
 - Sebenarnya lebih enak pake react sebagai FE, dan Djangonya dijadiin API, tapi yang tak lakukin gitu. FE nya jadi HTML biasa.
 - Terus setelah ngulik API untuk tsv, sebenarnya agak beda dengan yang lewat web, lebih lengkap di tsv, dan lebih kaya. Jadi pake itu aja gak papa dah.
 - Berhasil menampilkan tabel tsv dari API terus ditampilin, walau kode berantakan, dan hasilnya belum bagus
-- 
 ---
 `03/12/2025` - `2 jam lebih sepertinya sampai ganti hari`  
 ### Task

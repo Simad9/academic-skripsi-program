@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loader di Django</title>
+    <style>
+        /* Gaya dasar untuk Loader */
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: none; /* Awalnya disembunyikan, akan ditampilkan oleh JS */
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Kelas untuk menyembunyikan/menampilkan loader/konten */
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <h1>Contoh Pemuatan Data Asinkron</h1>
+
+    <div id="loader" class="loader"></div>
+    
+    <div id="content-area" class="hidden">
+        <h2></h2>
+        <p></p>
+        <ul id="item-list"></ul>
+    </div>
+
+    <script>
+        // Gunakan token CSRF jika tidak menggunakan @csrf_exempt
+        // const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value; 
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.getElementById('loader');
+            const contentArea = document.getElementById('content-area');
+
+            // 1. Tampilkan Loader
+            loader.style.display = 'block'; 
+            contentArea.classList.add('hidden'); // Pastikan konten tersembunyi
+            
+            // 2. Kirim permintaan AJAX ke View Django
+            fetch("{% url 'get_processed_data' %}", {
+                method: 'POST', // Menggunakan POST seperti di view, tapi GET juga bisa
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'X-CSRFToken': csrftoken, // Jika menggunakan CSRF
+                },
+                // body: JSON.stringify({ key: 'value' }) // Kirim data jika diperlukan
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Jaringan bermasalah atau status kode tidak OK');
+                }
+                return response.json(); // Mengurai respons JSON
+            })
+            .then(data => {
+                // 3. Data diterima: Sembunyikan loader dan tampilkan data
+                
+                // Sembunyikan loader
+                loader.style.display = 'none';
+                
+                // Tampilkan wadah konten
+                contentArea.classList.remove('hidden');
+
+                // Update DOM dengan data yang diterima
+                document.querySelector('#content-area h2').textContent = data.judul;
+                document.querySelector('#content-area p').textContent = data.isi;
+
+                // Tambahkan daftar item
+                const ul = document.getElementById('item-list');
+                data.daftar_item.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    ul.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('Ada kesalahan saat mengambil data:', error);
+                loader.style.display = 'none'; // Sembunyikan loader meskipun gagal
+                contentArea.innerHTML = '<h2>Gagal Memuat Data</h2><p>Terjadi kesalahan saat berkomunikasi dengan server.</p>';
+                contentArea.classList.remove('hidden');
+            });
+
+        });
+    </script>
+
+</body>
+</html>
