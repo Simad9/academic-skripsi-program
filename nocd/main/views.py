@@ -78,11 +78,10 @@ def stringdb_image(request):
 @csrf_exempt
 def stringdb_table(request):
     # Nanti tinggal ganti aja nama file nya
-    file_name = "stringdb_result.tsv" 
+    file_name = "stringdb_result_500.tsv" 
     
     if request.method != "GET":
       return JsonResponse({"error": "Hanya menerima GET request"}, status=405)
-
 
     base_static_dir = os.path.join(settings.BASE_DIR, "main", "static")
     full_output = os.path.join(base_static_dir, "files", file_name)

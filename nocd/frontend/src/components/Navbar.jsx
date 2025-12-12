@@ -26,15 +26,19 @@ export default function Navbar() {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a href="#input-dataset" className="font-semibold">
-                  Input Dataset
+                <details>
+                  <summary>Menu Program</summary>
+                  <ul className="bg-base-100 rounded-t-none p-2">
+                    <li><a href="#input-dataset">Input Dataset</a></li>
+                    <li><a href="#deteksi-komunitas">Deteksi Komunitas</a></li>
+                    <li><a href="#enrichment-analysis">Enrichment Analysis</a></li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <a href="#input-dataset">
+                  Informasi
                 </a>
-              </li>
-              <li>
-                <a href="#deteksi-komunitas">Deteksi Komunitas</a>
-              </li>
-              <li>
-                <a href="#enrichment-analysis">Enrichment Analysis</a>
               </li>
             </ul>
           </div>
@@ -49,23 +53,27 @@ export default function Navbar() {
             </span>
           </a>
         </div>
- 
+
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 font-poppins">
+          <ul className="menu menu-horizontal px-1 font-poppins gap-2">
             <li>
-              <a href="#input-dataset" className="font-semibold">
-                Input Dataset
+              <details>
+                <summary>Menu Program</summary>
+                <ul className="bg-base-100 rounded-t-none p-2">
+                  <li><a href="#input-dataset">Input Dataset</a></li>
+                  <li><a href="#deteksi-komunitas">Deteksi Komunitas</a></li>
+                  <li><a href="#enrichment-analysis">Enrichment Analysis</a></li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <a href="#input-dataset">
+                Informasi
               </a>
-            </li>
-            <li>
-              <a href="#deteksi-komunitas">Deteksi Komunitas</a>
-            </li>
-            <li>
-              <a href="#enrichment-analysis">Enrichment Analysis</a>
             </li>
           </ul>
         </div>
-       
+
         <div className="navbar-end">
           <label className="swap swap-rotate">
             {/* this hidden checkbox controls the state */}
@@ -92,7 +100,7 @@ export default function Navbar() {
             </svg>
           </label>
         </div>
-      </div>
+      </div >
     </>
 
   );

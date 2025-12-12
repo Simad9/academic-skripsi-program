@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently -n DJANGO,TAILWIND,REACT -c green,cyan,blue \"python manage.py runserver\" \"npx @tailwindcss/cli -i ./main/static/css/input.css -o ./main/static/css/output.css --watch\" \"npm run dev --prefix frontend"
+    "dev:tailwind": "concurrently -n DJANGO,TAILWIND,REACT -c green,cyan,blue \"python manage.py runserver\" \"npx @tailwindcss/cli -i ./main/static/css/input.css -o ./main/static/css/output.css --watch\" \"npm run dev --prefix frontend",
+    "dev": "concurrently -n DJANGO,REACT -c green,blue \"python manage.py runserver\" \"npm run dev --prefix frontend"
   },
   "keywords": [],
   "author": "Wijdan Akhmad S",

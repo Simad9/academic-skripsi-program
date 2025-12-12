@@ -1,24 +1,18 @@
 import { useState, useRef } from 'react';
 
 // Components
-import GraphVisualizer from '../components/GraphVisualizerComponent.jsx';
-import TableComponent from '../components/TableComponent.jsx';
+import GraphVisualizer from './molekul/GraphVisualizerComponent.jsx';
+import TableComponent from './molekul/TableComponent.jsx';
+import ButtonAtom from './atom/ButtonAtom.jsx';
 
 // API
-import { fetchStringDBTableData, fetchStringDBImageData } from '../api/api';
+import { fetchStringDBImageData } from '../api/api';
 
 export default function InputDataset() {
   const kosong = null; // Placeholder untuk kondisi kosong
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('file'); // State untuk tab aktif (file atau text)
-
-  // State BARU untuk Data Tabel STRINGDB
-  const [tableData, setTableData] = useState(null);
-  const [tableLoading, setTableLoading] = useState(false);
-  const [tableError, setTableError] = useState(null);
-  const [activeResultTab, setActiveResultTab] = useState('Graf'); // State untuk tab hasil (graf/tabel)
 
   // Ref untuk formFeature (formulir input feature kedua)
   const formFeatureRef = useRef(null);
@@ -34,13 +28,6 @@ export default function InputDataset() {
     const form = e.target;
     const formData = new FormData(form);
 
-    // Jika tab input adalah text area, pastikan ada isinya.
-    if (activeTab === 'text' && !formData.get('textarea_dataset')) {
-      setError("Input Gen tidak boleh kosong.");
-      setLoading(false);
-      return;
-    }
-
     try {
       const fetchImageData = await fetchStringDBImageData(formData);
       setData(fetchImageData);
@@ -50,36 +37,6 @@ export default function InputDataset() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleTableTabClick = async () => {
-    setActiveResultTab('Tabel'); // Atur tab hasil menjadi 'tabel'
-    // Lakukan fetching hanya jika data tabel belum pernah dimuat (null)
-    if (tableData === null) {
-      setTableLoading(true);
-      setTableError(null);
-
-      try {
-        // Panggil fungsi API yang sudah dipisah
-        const fetchedTableData = await fetchStringDBTableData();
-
-        setTableData(fetchedTableData); // Simpan data
-        console.log("Data tabel STRINGDB berhasil dimuat.");
-
-      } catch (err) {
-        // Tangani error fetching
-        setTableError("Gagal memuat data tabel STRINGDB: " + err.message);
-        setTableData(null);
-
-      } finally {
-        setTableLoading(false);
-      }
-    }
-  };
-
-  // Fungsi yang dipanggil saat tab "Graf" di klik
-  const handleGraphTabClick = () => {
-    setActiveResultTab('Graf');
   };
 
   // Tentukan path gambar yang akan ditampilkan. Gunakan ImageGraph default jika data.img_path null
@@ -101,8 +58,7 @@ export default function InputDataset() {
               name="inputan"
               className="tab"
               aria-label="Upload File"
-              checked={activeTab === 'file'}
-              onChange={() => setActiveTab('file')}
+              defaultChecked
             />
             <div className="tab-content bg-base-100 border-base-300 p-6">
               <form id="upload-form" onSubmit={handleSubmit}>
@@ -119,9 +75,7 @@ export default function InputDataset() {
                     required // File wajib diunggah
                   />
                 </fieldset>
-                <button type="submit" className="btn bg-nocd text-white w-full mt-4" disabled={loading}>
-                  {loading && activeTab === 'file' ? 'Memproses...' : 'Proses File'}
-                </button>
+                <ButtonAtom loading={loading} text={"Proses File"} />
               </form>
             </div>
 
@@ -131,8 +85,7 @@ export default function InputDataset() {
               name="inputan"
               className="tab"
               aria-label="Input Gen"
-              checked={activeTab === 'text'}
-              onChange={() => setActiveTab('text')}
+
             />
             <div className="tab-content bg-base-100 border-base-300 p-6">
               {/* <form id="input-gen-form" onSubmit={handleSubmit}>
@@ -205,51 +158,29 @@ export default function InputDataset() {
                 name="hasil"
                 className="tab"
                 aria-label="Graf"
-                checked={activeResultTab === 'Graf'} // Kontrol tab menggunakan state
-                onChange={handleGraphTabClick} // Panggil handler
+                defaultChecked
               />
-              {activeResultTab === 'Graf' && ( // Tampilkan konten hanya jika tab aktif
-                <div className="tab-content bg-base-100 border-base-100 p-6 mt-2">
-                  {/* Menggunakan GraphVisualizerComponent */}
-                  <GraphVisualizer imgPath={displayImagePath} />
-                </div>
-              )}
               <div className="tab-content bg-base-100 border-base-100 p-6 mt-2">
                 {/* Menggunakan GraphVisualizerComponent */}
                 <GraphVisualizer imgPath={displayImagePath} />
               </div>
 
               {/* TAB TABEL */}
-              <input type="radio" name="hasil" className="tab" aria-label="Tabel" checked={activeResultTab === 'Tabel'} onChange={handleTableTabClick} />
-              {activeResultTab === 'Tabel' && ( // Tampilkan konten hanya jika tab aktif
+              <input type="radio" name="hasil" className="tab" aria-label="Tabel" />
+              {( // Tampilkan konten hanya jika tab aktif
                 <div className="tab-content bg-base-100 border-base-100 p-6 mt-2">
                   <div className="overflow-x-auto h-[507px] w-full">
-                    {/* Menampilkan Loader Khusus Tabel */}
-                    {tableLoading && (
-                      <div className="flex justify-center items-center h-full w-full">
-                        <span className="loading loading-spinner loading-lg me-3"></span>
-                        <span className="skeleton skeleton-text">Mengambil Data Tunggu Sebentar</span>
-                      </div>
-                    )}
-
-                    {/* Menampilkan Error Khusus Tabel */}
-                    {tableError && (
-                      <div role="alert" className="alert alert-warning">
-                        <span>{tableError}</span>
-                      </div>
-                    )}
 
                     {/* Menampilkan Tabel jika data tersedia */}
-                    {!tableLoading && !tableError && tableData && (
-                      <div>
-                        <TableComponent tableData={tableData} />
-                        <div className="join">
-                          <button className="join-item btn">«</button>
-                          <button className="join-item btn">Page 1</button>
-                          <button className="join-item btn">»</button>
-                        </div>
+                    <div>
+                      <TableComponent tableData={null} />
+                      <div className="join">
+                        <button className="join-item btn">«</button>
+                        <button className="join-item btn">Page 1</button>
+                        <button className="join-item btn">»</button>
                       </div>
-                    )}
+                    </div>
+
                   </div>
                 </div>
               )}

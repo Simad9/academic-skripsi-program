@@ -1,11 +1,10 @@
 const TableComponent = ({ tableData }) => {
-  console.log(tableData)
   return (
-    <div id="tabel-tsv" className="overflow-x-auto">
-      <table className="table">
+    <div className="overflow-x-auto max-h-[400px] w-full mb-3 bg-base-200 border border-nocd/50 rounded-lg">
+      <table className="table table-md table-pin-rows">
         <thead>
           <tr>
-            <th>#</th>
+            <th >#</th>
             <th>Node 1</th>
             <th>Node 2</th>
             <th>Combine Score</th>
@@ -29,7 +28,7 @@ const TableComponent = ({ tableData }) => {
           )}
         </tbody>
       </table>
-      
+
     </div>
   );
 };
