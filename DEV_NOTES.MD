@@ -5,6 +5,15 @@
 Tujuan untuk track apa aja yang udah dilakukuan biar lebih aman aja dalam development aplikasi ini.\
 Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, selain itu masuk ke log book notion.
 
+## Todo Yang Harus Dikerjakan (Kalo Lupa)
+
+- Buat API BE sesuai Data Dummy yang dibutuhkan di FE
+- Ngurus Graf / Plot Graf itu
+- Buat jadi Atom , Molekul, Dan Component (Opsional)
+- Buat Route untuk Informasi Cata pakai (Opsional)
+- Bikin Halaman Informasi (Opsional - Pikir Nanti)
+- Bikin Component Untuk Judul (Pikir Nanti)
+
 ## Task Date per Date
 
 ---

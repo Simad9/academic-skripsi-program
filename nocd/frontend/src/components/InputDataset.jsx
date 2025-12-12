@@ -60,22 +60,22 @@ export default function InputDataset() {
               aria-label="Upload File"
               defaultChecked
             />
-            <div className="tab-content bg-base-100 border-base-300 p-6">
+            <div className="tab-content bg-base-100 border-base-300 p-4">
               <form id="upload-form" onSubmit={handleSubmit}>
-                <fieldset className="fieldset w-full">
-                  <legend className="fieldset-legend ms-2">
-                    Input File Dataset (.xlsx)
-                  </legend>
-                  <input
-                    type="file"
-                    name="file_dataset"
-                    className="file-input file-input-ghost w-full"
-                    accept=".xlsx"
-                    disabled={loading} // Nonaktifkan saat loading
-                    required // File wajib diunggah
-                  />
-                </fieldset>
-                <ButtonAtom loading={loading} text={"Proses File"} />
+                <p className="text-base font-montserrat font-medium mb-2 w-fit">Input Dataset (.xlsx) : </p>
+                <div className="flex flex-col w-full">
+                  <fieldset className="fieldset w-full">
+                    <input
+                      type="file"
+                      name="file_dataset"
+                      className="file-input"
+                      accept=".xlsx"
+                      disabled={loading} // Nonaktifkan saat loading
+                      required // File wajib diunggah
+                    />
+                  </fieldset>
+                  <ButtonAtom loading={loading} text={"Proses File"} />
+                </div>
               </form>
             </div>
 
@@ -150,21 +150,15 @@ export default function InputDataset() {
 
           {/* Tampilan Hasil Utama (Hanya jika tidak loading dan tidak ada error) */}
           {!loading && !error && (
-            <div className="tabs tabs-box w-full">
-
-              {/* TAB GRAF */}
-              <input
-                type="radio"
-                name="hasil"
-                className="tab"
-                aria-label="Graf"
-                defaultChecked
-              />
-              <div className="tab-content bg-base-100 border-base-100 p-6 mt-2">
-                {/* Menggunakan GraphVisualizerComponent */}
+            <>
+              {/*  GRAF */}
+              <div className="w-full bg-base-200 p-4 rounded-lg mb-5">
+                <h2 className="w-fit font-poppins text-lg font-semibold mb-2 ">
+                  Graf dari STRINGDB
+                </h2>
                 <GraphVisualizer imgPath={displayImagePath} />
               </div>
-            </div>
+            </>
           )}
         </section>
       </main>
