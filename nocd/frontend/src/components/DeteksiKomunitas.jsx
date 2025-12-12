@@ -5,6 +5,44 @@ import TableComponent from "./molekul/TableComponent.jsx";
 import ButtonAtom from "./atom/ButtonAtom.jsx";
 import CardAtom from "./atom/CardAtom.jsx";
 
+// Data
+const dataDummy = [
+  { Node1: 'GeneA', Node2: 'GeneB', Combine_Score: 0.876 },
+  { Node1: 'GeneC', Node2: 'GeneD', Combine_Score: 0.765 },
+  { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
+  { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
+  { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
+  { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
+  { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
+  { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
+  { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
+  { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
+  { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
+  { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
+];
+
+const dataDummyKomunitas = [
+  {
+    komunitas: 1,
+    jumlah_node: 150,
+    tipe: "Overlaping",
+    gen_terdaftar: ['GeneA', 'GeneB', 'GeneC', 'GeneA', 'GeneB', 'GeneC', 'GeneA', 'GeneB', 'GeneC', 'GeneA', 'GeneA', 'GeneA', 'GeneA', 'GeneA', 'GeneA'],
+    node_overlap: ['TP53'],
+    irisan: ['Kom 1', "Kom2"],
+    rasio_overlap: "80%"
+  },
+  {
+    komunitas: 2,
+    jumlah_node: 80,
+    tipe: "Non-Overlaping",
+    gen_terdaftar: ['GeneA', 'GeneB', 'GeneC', 'GeneA', 'GeneB', 'GeneC', 'GeneA', 'GeneB', 'GeneC', 'GeneA'],
+    node_overlap: ['Non'],
+    irisan: ["Non"],
+    rasio_overlap: "0%"
+  },
+
+]
+
 export default function DeteksiKomunitas() {
   const [sliderValue, setSliderValue] = useState(0.500);
   const handleSliderValue = (e) => {
@@ -24,46 +62,9 @@ export default function DeteksiKomunitas() {
   const handleSliderThres = (e) => {
     setSliderThres(parseFloat(e.target.value));
   }
-
-  const dataDummy = [
-    { Node1: 'GeneA', Node2: 'GeneB', Combine_Score: 0.876 },
-    { Node1: 'GeneC', Node2: 'GeneD', Combine_Score: 0.765 },
-    { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
-    { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
-    { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
-    { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
-    { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
-    { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
-    { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
-    { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
-    { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
-    { Node1: 'GeneE', Node2: 'GeneF', Combine_Score: 0.654 },
-  ];
-
-  const dataDummyKomunitas = [
-    {
-      komunitas: 1,
-      jumlah_node: 150,
-      tipe: "Overlaping",
-      gen_terdaftar: ['GeneA', 'GeneB', 'GeneC', 'GeneA', 'GeneB', 'GeneC', 'GeneA', 'GeneB', 'GeneC', 'GeneA', 'GeneA', 'GeneA', 'GeneA', 'GeneA', 'GeneA'],
-      node_overlap: ['TP53'],
-      irisan: ['Kom 1', "Kom2"],
-      rasio_overlap: "80%"
-    },
-    {
-      komunitas: 2,
-      jumlah_node: 80,
-      tipe: "Non-Overlaping",
-      gen_terdaftar: ['GeneA', 'GeneB', 'GeneC', 'GeneA', 'GeneB', 'GeneC', 'GeneA', 'GeneB', 'GeneC', 'GeneA'],
-      node_overlap: ['Non'],
-      irisan: ["Non"],
-      rasio_overlap: "0%"
-    },
-
-  ]
-
   return (
     <div className="w-full mb-8">
+      {/* Judul */}
       <h1 className="text-2xl font-bold font-poppins mb-5">
         Deteksi Komunitas
       </h1>
@@ -126,7 +127,7 @@ export default function DeteksiKomunitas() {
           </div>
           {/* Kanan */}
           <div className="w-full bg-base-200 p-6 rounded-lg">
-            <h2 className="font-poppins text-lg font-semibold ms-2 my-2 ">
+            <h2 className="font-poppins text-lg font-semibold mb-2">
               Isi Dataset (.tsv)
             </h2>
             <TableComponent tableData={dataDummy} />
@@ -205,10 +206,14 @@ export default function DeteksiKomunitas() {
             textTambahan="ini custom"
             className="flex-1 bg-base-200 rounded-lg"
           />
-          <CardAtom title={"Modularity Overlaping"} content="0.400"
+          <CardAtom title={"Modularity Overlaping (O_uv"} content="0.400"
             className="flex-1 bg-base-200 rounded-lg"
           />
-          <CardAtom title={"Jaciard"} content="0.398"
+          <CardAtom title={"Partition Density"} content="0.398"
+            className="flex-1 bg-base-200 rounded-lg"
+          />
+
+          <CardAtom title={"Conductance"} content="0.398"
             className="flex-1 bg-base-200 rounded-lg"
           />
         </div>
@@ -223,7 +228,7 @@ export default function DeteksiKomunitas() {
 
         {/* Tabel Komunitas Terbentuk */}
         <div className="w-full bg-base-200 p-6 rounded-lg">
-          <h2 className="w-fit font-poppins text-lg font-semibold ms-2 my-2 ">
+          <h2 className="w-fit font-poppins text-lg font-semibold mb-2">
             Tabel Hasil Deteksi Komunitas
           </h2>
           <div className="overflow-x-auto max-h-[500px] w-full bg-base-200 border-2 border-nocd/50 rounded-lg">

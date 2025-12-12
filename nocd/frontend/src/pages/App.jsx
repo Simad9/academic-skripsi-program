@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import Navbar from '../components/Navbar.jsx'
 import InputDataset from '../components/InputDataset.jsx'
 import DeteksiKomunitas from '../components/DeteksiKomunitas.jsx';
+import EnrichmentAnalysis from '../components/EnrichmentAnalysis.jsx';
 
 function App() {
-  const [deteksiKomunitas, setDeteksiKomunitas] = useState(true);
-  const [enrichmentAnalysis, setEnrichmentAnalysis] = useState(null);
+  const [deteksiKomunitas, setDeteksiKomunitas] = useState(false);
+  const [enrichmentAnalysis, setEnrichmentAnalysis] = useState(false);
 
   // Hooks
   const lanjutDeteksiKomunitas = (data) => {
@@ -18,7 +19,7 @@ function App() {
 
   return (
     // Jadi BOdy
-    <div className='bg-base-300'>
+    <div className='bg-base-300 pb-50'>
       {/* Jadi Isinya - Jika ada "h-screen" hapus aja*/}
       <main className='px-20 w-full flex flex-col gap-10 '>
         {/* NAVBAR */}
@@ -28,7 +29,7 @@ function App() {
 
         {/* Input-Dataset */}
         <section id="input-dataset" className="w-full bg-base-100 rounded-lg p-6 shadow-sm">
-          {/* <InputDataset /> */}
+          <InputDataset />
           <button className="btn btn-soft btn-base-100 w-full rounded-lg mt-3" onClick={() => lanjutDeteksiKomunitas(true)}>Lanjut Deteksi Komunitas</button>
         </section>
 
@@ -44,9 +45,7 @@ function App() {
         {/* Enrichment-Analysis */}
         {enrichmentAnalysis && (
           <section id="enrichment-analysis" className="w-full bg-base-100 rounded-lg p-6 shadow-sm">
-            <h1 className="text-2xl font-bold font-poppins mb-5">
-              Enrichment Analysis
-            </h1>
+            <EnrichmentAnalysis />
           </section>
         )}
 

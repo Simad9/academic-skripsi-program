@@ -1,32 +1,68 @@
 # Catatan Developer
+
 ---
+
 Tujuan untuk track apa aja yang udah dilakukuan biar lebih aman aja dalam development aplikasi ini.\
 Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, selain itu masuk ke log book notion.
 
 ## Task Date per Date
+
 ---
-`11/12/2025` - `Lebih dari 4 jam` 
+
+`12/12/2025` - `Lebih dari 3 jam`
+
 ### Task
+
+- [x] Slicing Sederhana Kelar
+- [x] Dibuat dengan data dummy
+
+### Notes
+
+- Slicing nya kelar
+- Tinggal ngurus buat uniplot atau yang grafik grafik itu
+- Setup API nya juga ini
+
+---
+
+---
+
+`11/12/2025` - `Lebih dari 4 jam`
+
+### Task
+
 - [x] FE jadi React dan udah dirapikan
 - [x] npm run dev udah konek juga sama Django BE dan React FE nya
-### Notes 
+
+### Notes
+
 - Berhasil ubah react untuk frontend nya
 - API juga udah dipisah untuk yang gambar dan tabel, biar gak berat pas fetch nya
 - Belum diubah tapi untuk fetch isi tabelnya
+
 ---
+
 ---
-`07/12/2025` - `Hampir 3 jam0an` 
+
+`07/12/2025` - `Hampir 3 jam0an`
+
 ### Task
+
 - [x] Gambar berhasil tampil
 - [x] Ngulik API tsv untuk dataset
 - [x] API Gambar dan API tsv untuk visualisasi kelar
-### Notes 
+
+### Notes
+
 - Sebenarnya lebih enak pake react sebagai FE, dan Djangonya dijadiin API, tapi yang tak lakukin gitu. FE nya jadi HTML biasa.
 - Terus setelah ngulik API untuk tsv, sebenarnya agak beda dengan yang lewat web, lebih lengkap di tsv, dan lebih kaya. Jadi pake itu aja gak papa dah.
 - Berhasil menampilkan tabel tsv dari API terus ditampilin, walau kode berantakan, dan hasilnya belum bagus
+
 ---
-`03/12/2025` - `2 jam lebih sepertinya sampai ganti hari`  
+
+`03/12/2025` - `2 jam lebih sepertinya sampai ganti hari`
+
 ### Task
+
 - [x] Install Django
 - [x] Setup Browser Reload
 - [x] Setup Tailwind
@@ -35,7 +71,9 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 - [x] Buat Logo Aplikasi by Gemini
 - [x] Formater Djlint dan belajar mematikan linter
 - [x] Belajar dokumentasi project
-### Notes 
+
+### Notes
+
 - Udah setup django untuk FE.
 - Udah setup browser reload untuk django biar gak perlu reload reload kalo ada perubahan.
 - Udah setup tailwind juga untuk base styling dan udah berhasil ngaruh reload juga.

@@ -164,26 +164,6 @@ export default function InputDataset() {
                 {/* Menggunakan GraphVisualizerComponent */}
                 <GraphVisualizer imgPath={displayImagePath} />
               </div>
-
-              {/* TAB TABEL */}
-              <input type="radio" name="hasil" className="tab" aria-label="Tabel" />
-              {( // Tampilkan konten hanya jika tab aktif
-                <div className="tab-content bg-base-100 border-base-100 p-6 mt-2">
-                  <div className="overflow-x-auto h-[507px] w-full">
-
-                    {/* Menampilkan Tabel jika data tersedia */}
-                    <div>
-                      <TableComponent tableData={null} />
-                      <div className="join">
-                        <button className="join-item btn">«</button>
-                        <button className="join-item btn">Page 1</button>
-                        <button className="join-item btn">»</button>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              )}
             </div>
           )}
         </section>
