@@ -15,20 +15,21 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 - Bikin Component Untuk Judul (Pikir Nanti)
 
 ## Task Date per Date
+
 ---
+
 
 `13/12/2025` - `Lebih dari 2 jam`
 
 ### Task
 
-- [ ] Lanjut Bikin API semuanya
-- [ ] FE bagian Deteksi Komunitas dikasih sumber data (API / Web)
+- [x] Lanjut Bikin API semuanya
 
 ### Notes
 
 
+- API BE udah kelar tinggal integrasiin aja ke FE nya
 
----
 
 ---
 
@@ -47,7 +48,6 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 
 ---
 
----
 
 `11/12/2025` - `Lebih dari 4 jam`
 
@@ -64,7 +64,6 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 
 ---
 
----
 
 `07/12/2025` - `Hampir 3 jam0an`
 

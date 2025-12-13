@@ -1,7 +1,8 @@
 import numpy as np
 import warnings
 
-from gnn_lib.utils import coms_list_to_matrix
+# from gnn_lib.utils import coms_list_to_matrix
+from main.code_ml.gnn_lib.utils import coms_list_to_matrix
 
 """
 Metrik-metrik untuk mengukur Community detection supervised.

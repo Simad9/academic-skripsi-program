@@ -10,8 +10,9 @@ import os
 import pandas as pd
 
 # Import dari file
-from .code_ml.stringdb import stringdb_fetch_api_img
+from .code_ml.stringdb import *
 from .code_ml.deteksiKomunitas import *
+from .code_ml.enrichmentAnalysis import *
 
 def index(request):
   number_list = range(1, 30)
@@ -21,7 +22,13 @@ def index(request):
   return render(request, "index.html", context)
 
 # ==== Untuk API - Skripsi - BE - Endpoint API  ====
-# Input Dataset
+# ~ Input Dataset ~
+"""
+Input Dataset (.xlsx) lalu ubah menjadi viasualisasi image STRINGDB
+Tujuan : Visualisasi Graf STRINGDB Secara garis besar
+Input : File - Dataset (.xlsx)
+Output : Gambar Graf STRINGDB
+"""
 @csrf_exempt
 def stringdb_image(request):
   # Cek method POST
@@ -78,7 +85,13 @@ def stringdb_image(request):
   # kembalikan json data
   return JsonResponse(data, status=200)
 
-# Deteksi Komunitas
+# ~ Deteksi Komunitas ~
+"""
+Pilih Dataset (.tsv) dari STRINGDB sesuai dengan require_score
+Tujuan : Agar User bisa bebas mau pake dataset yang gimana
+Input : String - require_score
+Output : Statistik Dataset yang dipilih
+"""
 @csrf_exempt
 def pilih_dataset(request):
     # Cek method dah bener belum
@@ -91,17 +104,6 @@ def pilih_dataset(request):
     except json.JSONDecodeError:
         return JsonResponse({"error": "Invalid JSON format"}, status=400)
     
-    # --- TEST ---
-    # Ambil Data JSON
-    require_score = str(input_data.get("require_score"))     
-    file_tsv = ambil_dataset(require_score)
-    # setup data_test
-    data_test = {
-        "require_score": require_score,
-        "file_tsv": file_tsv
-    }
-    #  --- END TEST ---
-
     require_score = str(input_data.get("require_score"))  
     detail = detail_dataset(require_score)
 
@@ -114,7 +116,6 @@ def pilih_dataset(request):
     response_data = {
         "status": "success",
         "message": "Hasil Dataset berhasil dimuat",
-        "test": data_test,
         "data": {
             "nodes": nodes,
             "edges": edges,
@@ -124,6 +125,12 @@ def pilih_dataset(request):
 
     return JsonResponse(response_data, status=200)
 
+"""
+Menampilkan Dataset yang dipilih dalam bentuk Tabel dan sudah pagination
+Tujuan : Memperlihatkan ke user kalo isi datasetnya begitu
+Input : String - require_score
+Output : Tabel Dataset sudah pagination
+"""
 @csrf_exempt
 def tabel_dataset(request):
   # Cek method dah bener belum
@@ -150,6 +157,12 @@ def tabel_dataset(request):
 
   return JsonResponse(response_data, status=200)
 
+"""
+Input Model GNN yang sudah disave
+Tujuan : Memasukan model GNN yang udah ditrain dan oke (onChange nanti dimasukin langsung tampil)
+Input : File - Model (.pth)
+Output : Config Model
+"""
 @csrf_exempt
 def input_model(request):
   # Cek method POST
@@ -172,6 +185,12 @@ def input_model(request):
   # kembalikan json data
   return JsonResponse(data, status=200)
 
+"""
+Melakukan Deteksi Komunitas dengan Model GNN dan threshold yang dipilih
+Tujuan : Melakukan Deteksi Komunitas Overlapingnya, kalo sudah masukin model kalo belum nanti bakal kesimpen
+Input : File - Model (.pth), Float - Threshold, String - require_score
+Output : Data Komunitas , Evaluasi Model
+"""
 @csrf_exempt
 def deteksi_komunitas(request):
   # Cek method POST
@@ -192,12 +211,51 @@ def deteksi_komunitas(request):
     for chunk in file_model.chunks():
         f.write(chunk)
 
+  # Ngambil Data Result
   result = deteksi_komunitas_proses(file_model_name, threshold, require_score)
+  # Ngambil Evaluasi
+  evaluasi = evaluasi_deteksi_komunitas()
 
   # setup data
   data = {
     "status": "success",
-    "message": "Gambar STRINGDB berhasil dibuat",
+    "message": "Deteksi Komunitas berhasil dilakukan",
+    "evaluasi": evaluasi,
+    "data": result
+  }
+
+  # kembalikan json data
+  return JsonResponse(data, status=200)
+
+#  ~ Enrichment Analaysis ~
+"""
+Menampilkan Semua List Komunitas yang ada
+Tujuan : Melihat fungsi dari komunitas yang dipilih untuk enrichment analysis
+Input : Array - gene_list
+Output : Data enrichment analysis
+"""
+@csrf_exempt
+def enrichment_analysis_komunitas(request):
+  # Cek method dah bener belum
+  if request.method != "POST":
+    return JsonResponse({"error": "Hanya menerima POST request"}, status=405) 
+  
+  # Setup JSON simpelnya
+  try:    
+    input_data = json.loads(request.body.decode('utf-8'))        
+  except json.JSONDecodeError:
+    return JsonResponse({"error": "Invalid JSON format"}, status=400)
+  
+  # Ambil Data JSON
+  gene_list = input_data.get("gene_list")
+
+  result = ambil_enrichment_analysis(gene_list)
+
+  # setup data
+  data = {
+    "status": "success",
+    "message": f"Enrichment Analysis berhasil didapat",
+    # "gene_list": gene_list,
     "data": result
   }
 

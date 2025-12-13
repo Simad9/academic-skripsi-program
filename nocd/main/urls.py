@@ -15,5 +15,7 @@ urlpatterns = [
     path('api/input-model', views.input_model, name='input_model'),
     path('api/deteksi-komunitas', views.deteksi_komunitas, name='deteksi_komunitas'),
 
+    # Enrichment Analysis
+    path('api/enrichment-analysis/', views.enrichment_analysis_komunitas, name="enrichment_analysis_komunitas"),
     
 ]  

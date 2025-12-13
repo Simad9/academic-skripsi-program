@@ -225,7 +225,7 @@ def ambil_config_model(nama_file):
   return config
 
 def membuat_peta_keanggotaan(communities_list, node_names):
-   # --- BAGIAN 1: Pre-processing (Membuat Peta Keanggotaan Node) ---
+  # --- BAGIAN 1: Pre-processing (Membuat Peta Keanggotaan Node) ---
   # Kita butuh tahu satu node itu muncul di komunitas mana saja
   node_membership = {}
 
@@ -237,7 +237,7 @@ def membuat_peta_keanggotaan(communities_list, node_names):
           node_membership[node_idx].append(comm_id)
 
   # --- BAGIAN 2: Membuat Data Dictionary ---
-  data_dummy_komunitas = []
+  data_komunitas = []
 
   for i, community_indices in enumerate(communities_list):
       # Skip jika komunitas kosong
@@ -296,20 +296,20 @@ def membuat_peta_keanggotaan(communities_list, node_names):
           "rasio_overlap": ratio_str
       }
       
-      data_dummy_komunitas.append(entry)
+      data_komunitas.append(entry)
 
-      return data_dummy_komunitas
+  return data_komunitas
 
 def deteksi_komunitas_proses(nama_file_model, threshold, require_score):
   # Load model
   checkpoint = load_model(nama_file_model)
   config = checkpoint['hyperparameters']  
   model = nn.GCN(
-    input_dim=config['input_dim'],
-    hidden_dims=config['hidden_dim'],
-    output_dim=config['output_dim'],
-    batch_norm=config['batch_norm'],
-    dropout=config['dropout']
+    input_dim= config['input_dim'],    
+    hidden_dims= config['hidden_dims'], 
+    output_dim= config['output_dim'],
+    batch_norm= config['batch_norm'],
+    dropout= config['dropout']
   ) 
   model.load_state_dict(checkpoint['model_state'])
   model.eval()
@@ -349,3 +349,15 @@ def deteksi_komunitas_proses(nama_file_model, threshold, require_score):
   node_membership = membuat_peta_keanggotaan(communities_list, node_names)
 
   return node_membership
+
+def evaluasi_deteksi_komunitas():
+  
+  #  Data Dummy
+  evulasi = {
+     "jumlah_komunitas": 46,
+     "modularity_overlaping": 0.400,
+     "partition_density": 0.398,
+     "conductane": 0.315
+  }
+
+  return evulasi
