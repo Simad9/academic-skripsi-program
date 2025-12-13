@@ -1,15 +1,17 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.templatetags.static import static
+import json
 
 # Library
 import os
 import pandas as pd
 
 # Import dari file
-from .ml_proses.stringdb import stringdb_fetch_api_img
+from .code_ml.stringdb import stringdb_fetch_api_img
+from .code_ml.deteksiKomunitas import *
 
 def index(request):
   number_list = range(1, 30)
@@ -18,7 +20,8 @@ def index(request):
     }
   return render(request, "index.html", context)
 
-# ==== Untuk API - Skripsi ====
+# ==== Untuk API - Skripsi - BE - Endpoint API  ====
+# Input Dataset
 @csrf_exempt
 def stringdb_image(request):
   # Cek method POST
@@ -75,43 +78,128 @@ def stringdb_image(request):
   # kembalikan json data
   return JsonResponse(data, status=200)
 
+# Deteksi Komunitas
 @csrf_exempt
-def stringdb_table(request):
-    # Nanti tinggal ganti aja nama file nya
-    file_name = "stringdb_result_500.tsv" 
+def pilih_dataset(request):
+    # Cek method dah bener belum
+    if request.method != "POST":
+        return JsonResponse({"error": "Hanya menerima POST request"}, status=405)    
     
-    if request.method != "GET":
-      return JsonResponse({"error": "Hanya menerima GET request"}, status=405)
-
-    base_static_dir = os.path.join(settings.BASE_DIR, "main", "static")
-    full_output = os.path.join(base_static_dir, "files", file_name)
-
-    # --- Tambahkan ini untuk debugging ---
-    print(f"Path yang dicari: {full_output}")
-    # -------------------------------------
-
-    try:
-      df = pd.read_csv(full_output, sep='\t')
-    except FileNotFoundError:
-      raise Exception(f"File TSV tidak ditemukan di: {full_output}")
+    # Setup JSON simpelnya
+    try:    
+        input_data = json.loads(request.body.decode('utf-8'))        
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON format"}, status=400)
     
-    subset = df[["preferredName_A", "preferredName_B", "score"]]
-    subset = subset.rename(columns={
-      "preferredName_A": "Node1",
-      "preferredName_B": "Node2",
-      "score": "Combine_Score"
-    })
-    
-    # Konversi ke List of Dictionaries (Records) dan bulatkan skor
-    data_records = subset.to_dict('records')
-    for record in data_records:
-      record['Combine_Score'] = round(record['Combine_Score'], 3)
+    # --- TEST ---
+    # Ambil Data JSON
+    require_score = str(input_data.get("require_score"))     
+    file_tsv = ambil_dataset(require_score)
+    # setup data_test
+    data_test = {
+        "require_score": require_score,
+        "file_tsv": file_tsv
+    }
+    #  --- END TEST ---
 
-    data = {
-      "status": "success",      
-      "message": "Data Tabel STRINGDB",
-      "data": data_records
+    require_score = str(input_data.get("require_score"))  
+    detail = detail_dataset(require_score)
+
+    # Setup variabel dataset
+    nodes = detail['n_nodes']
+    edges = detail['n_edges']
+    desnity = detail['density']
+    
+    # setup data response
+    response_data = {
+        "status": "success",
+        "message": "Hasil Dataset berhasil dimuat",
+        "test": data_test,
+        "data": {
+            "nodes": nodes,
+            "edges": edges,
+            "density": desnity,
+        }
     }
 
-    return JsonResponse(data, status=200)
+    return JsonResponse(response_data, status=200)
 
+@csrf_exempt
+def tabel_dataset(request):
+  # Cek method dah bener belum
+  if request.method != "POST":
+    return JsonResponse({"error": "Hanya menerima POST request"}, status=405) 
+  
+  # Setup JSON simpelnya
+  try:    
+    input_data = json.loads(request.body.decode('utf-8'))        
+  except json.JSONDecodeError:
+    return JsonResponse({"error": "Invalid JSON format"}, status=400)
+  
+  # Ambil Data JSON
+  require_score = str(input_data.get("require_score"))     
+  page = int(input_data.get("page", 1))
+  dataset_result = ambil_tabel_dataset(require_score, page=page, page_size=20)
+
+  # setup data response
+  response_data = {
+    "status": "success",
+    "message": f"Tabel Dataset halaman {page} ditampilkan",
+    "data": dataset_result
+  }
+
+  return JsonResponse(response_data, status=200)
+
+@csrf_exempt
+def input_model(request):
+  # Cek method POST
+  if request.method != "POST":
+      return JsonResponse({"error": "Hanya menerima POST request"}, status=405)
+  
+  # Ambil Data dari File
+  file = request.FILES.get("file_model")
+  filename = file.name
+
+  config = ambil_config_model(filename)
+
+   # setup data
+  data = {
+    "status": "success",
+    "message": "Model GNN (pth) berhasil diload",
+    "data": config
+  }
+
+  # kembalikan json data
+  return JsonResponse(data, status=200)
+
+@csrf_exempt
+def deteksi_komunitas(request):
+  # Cek method POST
+  if request.method != "POST":
+      return JsonResponse({"error": "Hanya menerima POST request"}, status=405)
+  
+  # Ambil Data dari File | bisa string aja sih sebenarnya
+  file_model = request.FILES.get("file_model")
+  threshold = float(request.POST.get("threshold"))
+  require_score = str(request.POST.get("require_score"))
+  file_model_name = file_model.name
+  
+  # Simpan file dulu!
+  path_model_dir = os.path.join(settings.BASE_DIR, 'main', 'code_ml', 'models')
+  os.makedirs(path_model_dir, exist_ok=True) # Buat folder jika belum ada
+  path_save_model = os.path.join(path_model_dir, file_model.name)
+  with open(path_save_model, "wb") as f:
+    for chunk in file_model.chunks():
+        f.write(chunk)
+
+  result = deteksi_komunitas_proses(file_model_name, threshold, require_score)
+
+  # setup data
+  data = {
+    "status": "success",
+    "message": "Gambar STRINGDB berhasil dibuat",
+    "data": result
+  }
+
+  # kembalikan json data
+  return JsonResponse(data, status=200)

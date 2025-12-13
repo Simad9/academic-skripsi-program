@@ -78,7 +78,7 @@ export default function DeteksiKomunitas() {
           <div className="w-full max-w-xs flex-1">
             <p className="text-base font-montserrat font-medium mb-2 w-fit">Required Score : </p>
             <div className="w-full max-w-xs">
-              <input type="range" min={0.400} max={0.900} value={sliderValue} className="range" step="0.1" onChange={handleSliderValue} />
+              <input type="range" min={0.400} max={0.900} value={sliderValue} className="range" step="0.1" onChange={handleSliderValue} name="require_score" />
               <div className="flex justify-between px-2.5 mt-2 text-xs">
                 <span>0.400</span>
                 <span>0.500</span>
