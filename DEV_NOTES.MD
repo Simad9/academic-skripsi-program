@@ -18,18 +18,16 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 
 ---
 
-
 `13/12/2025` - `Lebih dari 2 jam`
 
 ### Task
 
-- [x] Lanjut Bikin API semuanya
+- [x] Kelar Bikin API
+- [ ] 
 
 ### Notes
 
-
 - API BE udah kelar tinggal integrasiin aja ke FE nya
-
 
 ---
 
@@ -48,7 +46,6 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 
 ---
 
-
 `11/12/2025` - `Lebih dari 4 jam`
 
 ### Task
@@ -63,7 +60,6 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 - Belum diubah tapi untuk fetch isi tabelnya
 
 ---
-
 
 `07/12/2025` - `Hampir 3 jam0an`
 

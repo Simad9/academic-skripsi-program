@@ -6,7 +6,7 @@ import EnrichmentAnalysis from '../components/EnrichmentAnalysis.jsx';
 
 function App() {
   const [deteksiKomunitas, setDeteksiKomunitas] = useState(false);
-  const [enrichmentAnalysis, setEnrichmentAnalysis] = useState(false);
+  const [enrichmentAnalysis, setEnrichmentAnalysis] = useState(true);
 
   // Hooks
   const lanjutDeteksiKomunitas = (data) => {

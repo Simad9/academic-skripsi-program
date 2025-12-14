@@ -216,7 +216,7 @@ def ambil_config_model(nama_file):
   # Setup Return
   config = {
      "input_dim": config['input_dim'],
-     "hidden_dim": config['hidden_dim'],
+     "hidden_dims": config['hidden_dims'],
      "output_dim": config['output_dim'],
      "batch_norm": config['batch_norm'],
      "dropout": config['dropout'],

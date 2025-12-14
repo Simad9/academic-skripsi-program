@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TabEnrichmentAnalysisComponent from "./molekul/TabEnrichmentAnalysisComponent";
+import TabEnrichmentAnalysisComponent from "./atom/TabEnrichmentAnalysisComponent";
 
 // Data dummy untuk simulasi 100+ item
 const dummyKomunitas = [

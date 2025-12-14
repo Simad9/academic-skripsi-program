@@ -1,43 +1,20 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 
 // Components
-import GraphVisualizer from './molekul/GraphVisualizerComponent.jsx';
-import TableComponent from './molekul/TableComponent.jsx';
+import GraphVisualizer from './atom/GraphVisualizerComponent.jsx';
 import ButtonAtom from './atom/ButtonAtom.jsx';
 
-// API
-import { fetchStringDBImageData } from '../api/api';
+// Hooks Custom
+import useInputDataset from '../hooks/useInputDataset.js';
 
 export default function InputDataset() {
   const kosong = null; // Placeholder untuk kondisi kosong
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+
+  // Pake Hooks Custom
+  const { data, loading, error, handleSubmit } = useInputDataset();
 
   // Ref untuk formFeature (formulir input feature kedua)
   const formFeatureRef = useRef(null);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Reset state sebelum memproses
-    setLoading(true);
-    setError(null);
-    // Pertahankan data visual lama saat loading, atau reset: setData(null);
-
-    const form = e.target;
-    const formData = new FormData(form);
-
-    try {
-      const fetchImageData = await fetchStringDBImageData(formData);
-      setData(fetchImageData);
-      console.log("Data gambar STRINGDB berhasil dimuat:", fetchImageData);
-    } catch (err) {
-      setError("Gagal berkomunikasi dengan server: " + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // Tentukan path gambar yang akan ditampilkan. Gunakan ImageGraph default jika data.img_path null
   const displayImagePath = data && data.img_path ? data.img_path : "  https://placehold.co/500x500?text=No+Image+Available";
