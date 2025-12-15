@@ -6,7 +6,6 @@ export default function DK_DeteksiKomunitas(
 ) {
 
   const { data, evaluasi } = deteksiKomunitas || { data: [], evaluasi: {} }
-  console.log(data);
 
   return (
     <>

@@ -7,3 +7,17 @@ export const titikTiga = (data) => {
 export const enamAngkaBelakangKoma = (data) => {
   return parseFloat(data).toFixed(6);
 };
+
+// Ubah data untuk komunitas
+export const formatDataListKomunitas = (rawData) => {
+  if (!rawData) return null;
+
+  // CONTOH: Mengambil list gen dari setiap komunitas
+  // Misal rawData adalah array of objects komunitas
+  const formatted = rawData.map((item) => ({
+    komunitas: item.komunitas,
+    genes: item.gen_terdaftar // Misal ini yang butuh diambil
+  }));
+
+  return formatted;
+}

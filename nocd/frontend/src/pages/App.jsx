@@ -1,18 +1,26 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Navbar from '../components/Navbar.jsx'
 import InputDataset from '../components/InputDataset.jsx'
 import DeteksiKomunitas from '../components/DeteksiKomunitas.jsx';
 import EnrichmentAnalysis from '../components/EnrichmentAnalysis.jsx';
+import { formatDataListKomunitas } from '../utils/formartData.js';
 
 function App() {
-  const [deteksiKomunitas, setDeteksiKomunitas] = useState(false);
-  const [enrichmentAnalysis, setEnrichmentAnalysis] = useState(true);
+  // Data List Komunitas untuk Enrichment Analysisnya
+  const [komunitasListData, setKomunitasListData] = useState(null);
+  const handleDataFromDK = async (rawData) => {
+    if (!rawData) return
+    
+    const formatData = await formatDataListKomunitas(rawData)
+    setKomunitasListData(formatData)
+  }
 
-  // Hooks
+  // Setting Tombol Keliatan
+  const [deteksiKomunitas, setDeteksiKomunitas] = useState(true);
+  const [enrichmentAnalysis, setEnrichmentAnalysis] = useState(true);
   const lanjutDeteksiKomunitas = (data) => {
     setDeteksiKomunitas(data);
   }
-
   const lanjutEnrichmentAnalysis = (data) => {
     setEnrichmentAnalysis(data);
   }
@@ -36,7 +44,9 @@ function App() {
         {/* Deteksi-Komunitas */}
         {deteksiKomunitas && (
           <section id="deteksi-komunitas" className="w-full bg-base-100 rounded-lg p-6 shadow-sm">
-            <DeteksiKomunitas />
+            <DeteksiKomunitas
+              handleDataFromDK={handleDataFromDK}
+            />
             <button className="btn btn-soft btn-base-100 w-full rounded-lg mt-3" onClick={() => lanjutEnrichmentAnalysis(true)}>Lanjut Enrichment Analysis</button>
           </section>
         )}
@@ -45,7 +55,9 @@ function App() {
         {/* Enrichment-Analysis */}
         {enrichmentAnalysis && (
           <section id="enrichment-analysis" className="w-full bg-base-100 rounded-lg p-6 shadow-sm">
-            <EnrichmentAnalysis />
+            <EnrichmentAnalysis
+              dataListKomunitas={komunitasListData}
+            />
           </section>
         )}
 

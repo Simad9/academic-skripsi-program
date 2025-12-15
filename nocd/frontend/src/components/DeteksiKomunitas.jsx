@@ -1,7 +1,6 @@
-import { Fragment } from "react";
+import { useEffect } from "react";
 
 // Components
-import CardAtom from "./atom/CardAtom.jsx";
 import DK_HasilDataset from "./molekul/DK_HasilDataset.jsx";
 
 // Hooks
@@ -10,7 +9,7 @@ import DK_MasukanModel from "./molekul/DK_MasukanModel.jsx";
 import DK_PilihDataset from "./molekul/DK_PilihDataset.jsx";
 import DK_DeteksiKomunitas from "./molekul/DK_DeteksiKomunitas.jsx";
 
-export default function DeteksiKomunitas() {
+export default function DeteksiKomunitas({ handleDataFromDK }) {
   // 1. Ambil Data Slider Require Score
   const { sliderRequireScore, handleSliderValue } = useSliderRequireScore();
 
@@ -27,7 +26,17 @@ export default function DeteksiKomunitas() {
     deteksiKomunitas, loadingDeteksiKomunitas, errorDeteksiKomunitas, handleDeteksiKomunitas
   } = usePilihModel()
 
-  // 2.4. 
+  // Bonus Kirim ke Parrent Datanya
+  // --- LOGIC PENTING: LEMPAR DATA KE ATAS ---
+  useEffect(() => {
+    // Jika deteksiKomunitas sudah ada isinya (tidak null)
+    if (deteksiKomunitas) {
+      // Kirim data mentah ini ke Parent (App.jsx)
+      const allData = deteksiKomunitas.data
+      handleDataFromDK(allData);
+    }
+  }, [deteksiKomunitas]); // Jalankan setiap kali deteksiKomunitas berubah
+
   return (
     <div className="w-full mb-8">
       {/* Judul */}
@@ -76,11 +85,11 @@ export default function DeteksiKomunitas() {
       }
 
       {/* 4. Hasil Deteksi Komunitas */}
-      <DK_DeteksiKomunitas 
+      <DK_DeteksiKomunitas
         deteksiKomunitas={deteksiKomunitas}
         loadingDeteksiKomunitas={loadingDeteksiKomunitas}
         errorDeteksiKomunitas={errorDeteksiKomunitas}
-        />
+      />
 
     </div >
   )
