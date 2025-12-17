@@ -15,6 +15,32 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 - Bikin Component Untuk Judul (Pikir Nanti)
 
 ## Task Date per Date
+---
+
+`75/12/2025` - `Lebih dari 1 jam`
+
+### Task
+
+- [x] Menambahkan Plotly.js untuk graf hasil deteksi komunitas dan enrichment analysis
+- [ ] Bikin Video Demo Awal aplikasi jadi
+- [ ] Bikin Video Yang Filenya langsungan itu
+- [ ] API evaluasi belum berhasil di buat
+
+### Notes
+
+- Masih terasa berat untuk membuat graf nya, harus di optimalkan, dengan pengurangan node, karena bikin berat itunya
+- Rapikan yang belum rapi
+---
+
+`15/12/2025` - `Lebih dari 4 jam`
+
+### Task
+
+- [x] Integrasi API BE ke FE
+
+### Notes
+
+- API BE udah kelar tinggal integrasiin aja ke FE ny
 
 ---
 
@@ -23,7 +49,7 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 ### Task
 
 - [x] Kelar Bikin API
-- [ ] 
+- [ ]
 
 ### Notes
 
