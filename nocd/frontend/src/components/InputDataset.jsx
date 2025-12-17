@@ -57,15 +57,16 @@ export default function InputDataset() {
             </div>
 
             {/* Tab Input Gen */}
-            <input
-              type="radio"
-              name="inputan"
-              className="tab"
-              aria-label="Input Gen"
-
-            />
-            <div className="tab-content bg-base-100 border-base-300 p-6">
-              {/* <form id="input-gen-form" onSubmit={handleSubmit}>
+            {kosong && (
+              <>
+                <input
+                  type="radio"
+                  name="inputan"
+                  className="tab"
+                  aria-label="Input Gen"
+                />
+                <div className="tab-content bg-base-100 border-base-300 p-6">
+                  {/* <form id="input-gen-form" onSubmit={handleSubmit}>
                 <fieldset className="fieldset w-full">
                   <legend className="fieldset-legend ms-2">
                     Input Gen (max 2000 gen)
@@ -83,8 +84,10 @@ export default function InputDataset() {
                 </button>
               </form> */}
 
-              <h1 className='font-poppins text-xl font-semibold'>Tahap Pengembangan Selanjutnya Belum Di Integrasikan</h1>
-            </div>
+                  <h1 className='font-poppins text-xl font-semibold'>Tahap Pengembangan Selanjutnya Belum Di Integrasikan</h1>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Form Input Feature (Dibutuhkan setelah proses berhasil) = Ini hidden dulu , nanti kasih "data &&"" */}

@@ -57,7 +57,7 @@ export default function EnrichmentAnalysis({ dataListKomunitas }) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+  
 
   return (
     <div className="w-full mb-8">
@@ -163,32 +163,38 @@ export default function EnrichmentAnalysis({ dataListKomunitas }) {
           </div>
         )}
 
+        {!selectedKomunitas && (
+          <div className="w-full h-40 bg-base-200 rounded-lg flex items-center justify-center text-gray-500">
+            Silahkan pilih komunitas terlebih dahulu untuk melihat hasil analisis.
+          </div>
+        )}
 
-        {!loadingEA && !errorEA && selectedKomunitas && dataEA ? (
+
+        {!loadingEA && !errorEA && selectedKomunitas && dataEA && (
           <div>
             <div className="tabs tabs-border">
               <TabEnrichmentAnalysisComponent
                 datas={dataEA.data_bp}
                 label="Biological Process"
+                selectedKomunitas={selectedKomunitas}
                 defaultChecked={true}
               />
               <TabEnrichmentAnalysisComponent
                 datas={dataEA.data_mf}
                 label="Molecular Function"
+                selectedKomunitas={selectedKomunitas}
               />
               <TabEnrichmentAnalysisComponent
                 datas={dataEA.data_cc}
                 label="Cellular Component"
+                selectedKomunitas={selectedKomunitas}
               />
               <TabEnrichmentAnalysisComponent
                 datas={dataEA.data_kp}
                 label="KEGG Pathway"
+                selectedKomunitas={selectedKomunitas}
               />
             </div>
-          </div>
-        ) : (
-          <div className="w-full h-40 bg-base-200 rounded-lg flex items-center justify-center text-gray-500">
-            Silahkan pilih komunitas terlebih dahulu untuk melihat hasil analisis.
           </div>
         )}
       </section>

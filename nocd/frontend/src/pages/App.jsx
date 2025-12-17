@@ -27,7 +27,7 @@ function App() {
 
   return (
     // Jadi BOdy
-    <div className='bg-base-300 pb-50'>
+    <div className='bg-base-300 pb-20'>
       {/* Jadi Isinya - Jika ada "h-screen" hapus aja*/}
       <main className='px-20 w-full flex flex-col gap-10 '>
         {/* NAVBAR */}

@@ -1,6 +1,7 @@
 import { useState, Fragment } from "react";
+import EnrichmentChartComponent from "./EnrichmentChartComponent";
 
-export default function TabEnrichmentAnalysisComponent({ datas, label, defaultChecked }) {
+export default function TabEnrichmentAnalysisComponent({ datas, label, selectedKomunitas, defaultChecked }) {
   // UBAH 1: State awal adalah array kosong [], bukan null.
   // Array ini akan menampung SEMUA index yang sedang terbuka.
   const [activeIndices, setActiveIndices] = useState([]);
@@ -32,10 +33,17 @@ export default function TabEnrichmentAnalysisComponent({ datas, label, defaultCh
             {/* Graf */}
             <div className="w-full rounded-lg mb-5">
               <h2 className="w-fit font-poppins text-lg font-semibold mb-2">Graf Enrichment Analysis</h2>
-              <img
+              {/* <img
                 src="https://placehold.co/2000x500/?text=Graf Enrichment Analysis"
                 alt="Graf Enrichment Analysis"
-              />
+              /> */}
+              <div className="w-full ">
+                <EnrichmentChartComponent
+                  data={datas}
+                  label={label}
+                  selectedKomunitas={selectedKomunitas}
+                />
+              </div>
             </div>
 
             {/* Tabel */}
@@ -111,7 +119,6 @@ export default function TabEnrichmentAnalysisComponent({ datas, label, defaultCh
           </div>
         )
       }
-
     </>
   );
 }

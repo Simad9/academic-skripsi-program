@@ -201,7 +201,6 @@ def deteksi_komunitas(request):
   file_model = request.FILES.get("file_model")
   threshold = float(request.POST.get("threshold"))
   require_score = str(request.POST.get("require_score"))
-  file_model_name = file_model.name
   
   # Simpan file dulu!
   path_model_dir = os.path.join(settings.BASE_DIR, 'main', 'code_ml', 'models')
@@ -212,7 +211,7 @@ def deteksi_komunitas(request):
         f.write(chunk)
 
   # Ngambil Data Result
-  result = deteksi_komunitas_proses(file_model_name, threshold, require_score)
+  result = deteksi_komunitas_proses(file_model.name, threshold, require_score)
   # Ngambil Evaluasi
   evaluasi = evaluasi_deteksi_komunitas()
 

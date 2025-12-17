@@ -1,5 +1,6 @@
 import { Fragment } from "react"
 import CardAtom from "../atom/CardAtom"
+import NetworkGraphComponent from "../atom/NetworkGraphComponent"
 
 export default function DK_DeteksiKomunitas(
   { deteksiKomunitas, loadingDeteksiKomunitas, errorDeteksiKomunitas }
@@ -54,7 +55,10 @@ export default function DK_DeteksiKomunitas(
             <h2 className="w-fit font-poppins text-lg font-semibold mb-2 ">
               Graf Hasil Deteksi Komunitas
             </h2>
-            <img src="https://placehold.co/2000x500/?text=GrafHasilDeteksiKomunitas" alt="Deteksi Komunitas" />
+            {/* <img src="https://placehold.co/2000x500/?text=GrafHasilDeteksiKomunitas" alt="Deteksi Komunitas" /> */}
+            <NetworkGraphComponent
+              data={data}
+            />
           </div>
 
           {/* Tabel Komunitas Terbentuk */}

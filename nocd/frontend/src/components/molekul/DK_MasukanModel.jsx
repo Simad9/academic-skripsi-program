@@ -55,11 +55,11 @@ export default function DK_MasukanModel(
 
               {!loadingConfigModel && !errorConfigModel && configModel && (
                 <div className="flex flex-wrap gap-2 max-w-md mt-1">
-                  <div class="badge badge-soft badge-secondary text-sm">input_dim = {titikTiga(configModel.input_dim)}</div>
-                  <div class="badge badge-soft badge-secondary">hidden_dims = {JSON.stringify(configModel.hidden_dims)}</div>
-                  <div class="badge badge-soft badge-secondary">output_dim = {configModel.output_dim}</div>
-                  <div class="badge badge-soft badge-secondary">batch_norm = {configModel.batch_norm ? "True" : "False"}</div>
-                  <div class="badge badge-soft badge-secondary">dropout = {configModel.dropout}</div>
+                  <div className="badge badge-soft badge-secondary text-sm">input_dim = {titikTiga(configModel.input_dim)}</div>
+                  <div className="badge badge-soft badge-secondary">hidden_dims = {JSON.stringify(configModel.hidden_dims)}</div>
+                  <div className="badge badge-soft badge-secondary">output_dim = {configModel.output_dim}</div>
+                  <div className="badge badge-soft badge-secondary">batch_norm = {configModel.batch_norm ? "True" : "False"}</div>
+                  <div className="badge badge-soft badge-secondary">dropout = {configModel.dropout}</div>
                 </div>
               )}
 
