@@ -55,9 +55,14 @@ export default function DK_HasilDataset(
                     className={"flex-1 card bg-base-200 card-md shadow-sm"}
                   />
                 </div>
-                <CardAtom title={"Kepadatan (Density)"} content={enamAngkaBelakangKoma(dataset.density)}
-                  className={"card bg-base-200 card-md shadow-sm"}
-                />
+                <div className="flex gap-5">
+                  <CardAtom title={"Kepadatan (Density)"} content={enamAngkaBelakangKoma(dataset.density)}
+                    className={"flex-1 card bg-base-200 card-md shadow-sm"}
+                  />
+                  <CardAtom title={"Koefisien Kluster"} content={enamAngkaBelakangKoma(dataset.clust_coef)}
+                    className={"flex-1 card bg-base-200 card-md shadow-sm"}
+                  />
+                </div>
               </div>
               {/* Kanan */}
               <div className="w-full bg-base-200 p-6 rounded-lg">
@@ -91,7 +96,7 @@ export default function DK_HasilDataset(
             </div>
           </>
         ) : null}
-      </section>
+      </section >
     </>
   )
 }

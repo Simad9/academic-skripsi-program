@@ -106,21 +106,12 @@ def pilih_dataset(request):
     
     require_score = str(input_data.get("require_score"))  
     detail = detail_dataset(require_score)
-
-    # Setup variabel dataset
-    nodes = detail['n_nodes']
-    edges = detail['n_edges']
-    desnity = detail['density']
-    
+   
     # setup data response
     response_data = {
         "status": "success",
         "message": "Hasil Dataset berhasil dimuat",
-        "data": {
-            "nodes": nodes,
-            "edges": edges,
-            "density": desnity,
-        }
+        "data": detail
     }
 
     return JsonResponse(response_data, status=200)
@@ -210,17 +201,15 @@ def deteksi_komunitas(request):
     for chunk in file_model.chunks():
         f.write(chunk)
 
-  # Ngambil Data Result
+  # Ngambil Data Result & Evaluasinya
   result = deteksi_komunitas_proses(file_model.name, threshold, require_score)
-  # Ngambil Evaluasi
-  evaluasi = evaluasi_deteksi_komunitas()
 
   # setup data
   data = {
     "status": "success",
     "message": "Deteksi Komunitas berhasil dilakukan",
-    "evaluasi": evaluasi,
-    "data": result
+    "evaluasi": result["evaluasi"],
+    "data": result["data"]
   }
 
   # kembalikan json data

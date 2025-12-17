@@ -6,8 +6,8 @@
     {% include 'components/head.html' %}
     <title>{% block title %} NOCD - BE {% endblock %}</title>
   </head>
-  <body class="bg-base-300 h-screen">
-    <main class="px-20 w-full flex flex-col gap-10">
+  <body class="bg-base-300 pb-10 mb-10">
+    <main class="px-20 w-full flex flex-col gap-8">
       {% comment %} Navbar {% endcomment %}
       <nav>{% include 'components/navbar.html' %}</nav>
 
@@ -38,13 +38,45 @@
                 </td>
               </tr>
               <tr>
-                <td><code>/api/stringdb-table</code></td>
-                <td>GET</td>
-                <td>Tampilkan data dari tsv</td>
+                <td><code>/api/pilih-dataset</code></td>
+                <td>POST</td>
+                <td>Menampilkan Detail Dataset</td>
+              </tr>
+              <tr>
+                <td><code>/api/tabel-dataset</code></td>
+                <td>POST</td>
+                <td>Menampilkan isi tabel dataset .tsv dan sudah pagination juga</td>
+              </tr>
+              <tr>
+                <td><code>/api/input-model</code></td>
+                <td>POST</td>
+                <td>Menampilkan Config Model yang sudah disimpan</td>
+              </tr>
+              <tr>
+                <td><code>/api/deteksi-komunitas</code></td>
+                <td>POST</td>
+                <td>Melakukan Deteksi Komunitas Overlaping</td>
+              </tr>
+              <tr>
+                <td><code>/api/enrichment-analysis</code></td>
+                <td>POST</td>
+                <td>Melakukan Enrichemtn Analysis dari komunitas yang dipilih</td>
               </tr>
             </tbody>
           </table>
         </div>
+
+        {% comment %} Dokumentasi Postman BE {% endcomment %}
+        <h3 class="font-popins text-lg mt-3">
+          Dokumentasi Postman untuk API ini :
+          <a
+            href="https://documenter.getpostman.com/view/30150423/2sB3dVNStX"
+            target="_blank"
+            ><code class="kbd"
+              >https://documenter.getpostman.com/view/30150423/2sB3dVNStX</code
+            ></a
+          >
+        </h3>
       </section>
     </main>
   </body>

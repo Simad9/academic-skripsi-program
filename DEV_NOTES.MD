@@ -17,19 +17,38 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 ## Task Date per Date
 ---
 
-`75/12/2025` - `Lebih dari 1 jam`
+`18/12/2025` - `Baru 30 menit-an catat selesai api`
+
+### Task
+
+- [x] API evaluasi belum berhasil di buat
+- [ ] Bikin Video Demo Awal aplikasi jadi (buat bimbingan)
+- [ ] Bikin Video Yang Filenya langsungan itu (buat bimbingan)
+- [x] Dokumentasi Postman BE
+
+### Notes
+
+- API nya udah kelar semua harusnya, tinggal bikin dokumentasi aja
+- Mau bikin lewat postman aja, biar gampang dan enak dilihat, karena udah jadi juga
+- Berhasil Membuat Dokumentasi Postman untuk API BE nya
+
+---
+
+`17/12/2025` - `Lebih dari 1 jam`
 
 ### Task
 
 - [x] Menambahkan Plotly.js untuk graf hasil deteksi komunitas dan enrichment analysis
 - [ ] Bikin Video Demo Awal aplikasi jadi
 - [ ] Bikin Video Yang Filenya langsungan itu
-- [ ] API evaluasi belum berhasil di buat
+c
 
 ### Notes
 
 - Masih terasa berat untuk membuat graf nya, harus di optimalkan, dengan pengurangan node, karena bikin berat itunya
 - Rapikan yang belum rapi
+- Evaluasi berhasil dibuat, dan pake yang ada dulu aja
+
 ---
 
 `15/12/2025` - `Lebih dari 4 jam`

@@ -1,6 +1,10 @@
 // tiap 3 angka titik
 export const titikTiga = (data) => {
-  return (data / 1000).toFixed(3).replace(".", ".");
+  if (data < 1000) {
+    return data;
+  } else {
+    return (data / 1000).toFixed(3).replace(".", ".");
+  }
 };
 
 // Float Enam Angka Belakang Koma
@@ -16,8 +20,8 @@ export const formatDataListKomunitas = (rawData) => {
   // Misal rawData adalah array of objects komunitas
   const formatted = rawData.map((item) => ({
     komunitas: item.komunitas,
-    genes: item.gen_terdaftar // Misal ini yang butuh diambil
+    genes: item.gen_terdaftar, // Misal ini yang butuh diambil
   }));
 
   return formatted;
-}
+};

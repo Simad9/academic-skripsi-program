@@ -2,7 +2,10 @@ import ButtonAtom from "../atom/ButtonAtom";
 
 export default function DK_PilihDataset(
   {
-    sliderRequireScore, handleSliderValue, loadingDataset, handleClickDataset
+    sliderRequireScore,
+    // handleSliderValue,
+    loadingDataset,
+    handleClickDataset
   }
 ) {
   return (
@@ -13,7 +16,7 @@ export default function DK_PilihDataset(
         </h2>
         <div className="flex gap-10 w-full justify-start align-items-center">
           {/* Slider | Required Score */}
-          <div className="w-full max-w-xs flex-1">
+          {/* <div className="w-full max-w-xs flex-1">
             <p className="text-base font-montserrat font-medium mb-2 w-fit">Required Score : </p>
             <div className="w-full max-w-xs">
               <input type="range" min={0.400} max={0.900} defaultValue={sliderRequireScore} className="range" step="0.1" onChange={handleSliderValue} name="require_score" />
@@ -26,6 +29,11 @@ export default function DK_PilihDataset(
                 <span>0.900</span>
               </div>
             </div>
+          </div> */}
+          {/* Input | Require Score Fixed */}
+          <div className="w-full max-w-xs flex-1">
+            <p className="text-base font-montserrat mb-2 font-medium w-fit">Required Score : </p>
+            <input type="text" className="input" defaultValue="0.400" />
           </div>
           {/* Input | Species */}
           <div className="w-full max-w-xs flex-1">

@@ -12,6 +12,7 @@ import DK_DeteksiKomunitas from "./molekul/DK_DeteksiKomunitas.jsx";
 export default function DeteksiKomunitas({ handleDataFromDK }) {
   // 1. Ambil Data Slider Require Score
   const { sliderRequireScore, handleSliderValue } = useSliderRequireScore();
+  const require_score_fixed = 0.4;
 
   // 2.1. Data Detail Dataset
   const {
@@ -49,7 +50,8 @@ export default function DeteksiKomunitas({ handleDataFromDK }) {
         sliderRequireScore={sliderRequireScore}
         handleSliderValue={handleSliderValue}
         loadingDataset={loadingDataset}
-        handleClickDataset={() => handleClickDataset(sliderRequireScore)}
+        // handleClickDataset={() => handleClickDataset(sliderRequireScore)}
+        handleClickDataset={() => handleClickDataset(require_score_fixed)}
       />
 
       {/* 2. Hasil Ambil Dataset */}
@@ -74,7 +76,7 @@ export default function DeteksiKomunitas({ handleDataFromDK }) {
         loadingDeteksiKomunitas={loadingDeteksiKomunitas}
         handleDeteksiKomunitas={() => handleDeteksiKomunitas(sliderRequireScore)}
       />
-      
+
       {/* 4. Hasil Deteksi Komunitas */}
       <DK_DeteksiKomunitas
         deteksiKomunitas={deteksiKomunitas}

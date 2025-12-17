@@ -10,9 +10,12 @@ import scipy.sparse as sp
 from sklearn.preprocessing import normalize
 import torch
 import torch.nn.functional as F
+import networkx as nx
+from cdlib import NodeClustering, evaluation
 
 # Libaray GNN NOCD
 from .gnn_lib import *
+from .gnn_lib import metrics
 
 """
 # Ambil Dataset sesuai require_score
@@ -23,17 +26,17 @@ path_dataset: path datasetnya
 """
 def ambil_dataset(require_score):  
   # Path File Dataset
+  # path_folder = "stringdb_api_tsv"
+  # path_folder = "stringdb_web_tsv"
+  path_folder = "stringdb_web_tsv_short"
   filename = f"stringdb_result_{require_score}.tsv"
-
-  # Mau dari API atau Web
-  source = "api"
 
   # Masuk ke path nya
   path_dataset = os.path.join(
         settings.BASE_DIR, 
         'main',
         'code_ml', 
-        f'stringdb_{source}_tsv',
+        path_folder,
         filename  
     )
 
@@ -134,14 +137,22 @@ def detail_dataset(require_score):
   file_dataset = ambil_dataset(require_score)
   A = ambil_matrix_A(file_dataset)
 
+  # Jumlah Node
   n_nodes = A.shape[0]
+  # Jumlah Edges
   n_edges = A.nnz // 2  # Undirected
+  # Density 
   density = (2 * n_edges) / (n_nodes * (n_nodes - 1))
+  # Clustering Coefficient
+  num_triangles = (A @ A @ A).diagonal().sum() / 6
+  num_possible_triangles = (n_nodes - 2) * (n_nodes - 1) * n_nodes / 6
+  clust_coef_baseline = num_triangles / num_possible_triangles
 
   data_detail = {
-    'n_nodes': n_nodes,
-    'n_edges': n_edges,
-    'density': density
+    'nodes': n_nodes,
+    'edges': n_edges,
+    'density': density,
+    'clust_coef': clust_coef_baseline
   }  
 
   return data_detail
@@ -348,16 +359,55 @@ def deteksi_komunitas_proses(nama_file_model, threshold, require_score):
   # Komunitas Dictionary
   node_membership = membuat_peta_keanggotaan(communities_list, node_names)
 
-  return node_membership
+  #  === Evaluasi ===
+  # 4 evaluasi unsupervised
+  eval_metric = metrics.evaluate_unsupervised(Z_pred, A)
 
-def evaluasi_deteksi_komunitas():
+  # Modularity Overlaping
+  if sp.issparse(A):
+      A_dense = A.toarray()
+  else:
+      A_dense = A
+  Z_pred_int = Z_pred.astype(int)
+  modularity_overlap = metrics.overlapping_modularity(A_dense, Z_pred_int)
   
-  #  Data Dummy
-  evulasi = {
-     "jumlah_komunitas": 46,
-     "modularity_overlaping": 0.400,
-     "partition_density": 0.398,
-     "conductane": 0.315
+  # Evaluasi Menggunakan cdlib
+  # Persiapan awal
+  if sp.issparse(A):
+      G = nx.from_scipy_sparse_array(A)
+  else:
+      G = nx.from_numpy_array(A)
+  communities_list = []
+  num_communities = Z_pred.shape[1]
+  for i in range(num_communities):
+      members = np.where(Z_pred[:, i])[0].flatten().tolist()
+      if len(members) > 0: # Hanya masukkan komunitas yang ada isinya
+          communities_list.append(members)
+  cdlib_communities = NodeClustering(communities_list, graph=G, method_name="GNN_Pred", overlap=True)
+
+  # Evaluasinya
+  modularity_res = evaluation.newman_girvan_modularity(G, cdlib_communities)  
+  link_mod_res = evaluation.link_modularity(G, cdlib_communities)
+  z_mod_res = evaluation.z_modularity(G, cdlib_communities)
+
+  # Pemetaan JSON evaluasi
+  evaluasi = {
+    "jumlah_komunitas": config['output_dim'],
+    "coverage": eval_metric['coverage'],
+    "conductance": eval_metric['conductance'],
+    "density_deteksi": eval_metric['density'],
+    "clust_coef_deteksi": eval_metric['clustering_coef'],
+    "modularity_overlaping": modularity_overlap,
+    "newman-firvan_modularitu": modularity_res.score,
+    "link_modularity": link_mod_res.score,
+    "z_modularity": z_mod_res.score
   }
 
-  return evulasi
+  # Dipetakan hasil
+  result = {
+    "data": node_membership,
+    "evaluasi": evaluasi
+  }
+
+  return result
+
