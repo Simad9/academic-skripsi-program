@@ -14,7 +14,7 @@ export default function DK_PilihDataset(
         <h2 className="text-xl font-semibold font-poppins mb-3">
           1. Pilih Dataset (.tsv)
         </h2>
-        <div className="flex gap-10 w-full justify-start align-items-center">
+        <div className="flex flex-col lg:flex-row gap-5  lg:gap-10 w-full justify-start align-items-center">
           {/* Slider | Required Score */}
           {/* <div className="w-full max-w-xs flex-1">
             <p className="text-base font-montserrat font-medium mb-2 w-fit">Required Score : </p>

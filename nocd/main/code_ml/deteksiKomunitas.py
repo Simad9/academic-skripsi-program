@@ -252,8 +252,8 @@ def membuat_peta_keanggotaan(communities_list, node_names):
 
   for i, community_indices in enumerate(communities_list):
       # Skip jika komunitas kosong
-      if len(community_indices) == 0:
-          continue
+      # if len(community_indices) == 0:
+      #     continue
 
       comm_id = i + 1
       
@@ -392,13 +392,13 @@ def deteksi_komunitas_proses(nama_file_model, threshold, require_score):
 
   # Pemetaan JSON evaluasi
   evaluasi = {
-    "jumlah_komunitas": config['output_dim'],
+    "jumlah_komunitas": len(node_membership),
     "coverage": eval_metric['coverage'],
     "conductance": eval_metric['conductance'],
     "density_deteksi": eval_metric['density'],
     "clust_coef_deteksi": eval_metric['clustering_coef'],
     "modularity_overlaping": modularity_overlap,
-    "newman-firvan_modularitu": modularity_res.score,
+    "newman_firvan_modularity": modularity_res.score,
     "link_modularity": link_mod_res.score,
     "z_modularity": z_mod_res.score
   }

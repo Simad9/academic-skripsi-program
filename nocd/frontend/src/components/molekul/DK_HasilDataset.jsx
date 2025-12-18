@@ -38,12 +38,13 @@ export default function DK_HasilDataset(
         )}
 
         {/* Tampilan Hasil Utama (Hanya jika tidak loading dan tidak ada error) */}
-        {!loadingDataset && !errorDataset && dataset ? (
+        {!loadingDataset && !errorDataset && dataset ? 
+        (
           <>
             <h2 className="text-xl font-semibold font-poppins mb-3">
               2. Hasil Dataset
             </h2>
-            <div className="flex w-full gap-5">
+            <div className="flex flex-col lg:flex-row w-full gap-5">
               {/* Kiri */}
               <div className="w-full flex flex-col gap-5">
                 <div className="flex gap-5">

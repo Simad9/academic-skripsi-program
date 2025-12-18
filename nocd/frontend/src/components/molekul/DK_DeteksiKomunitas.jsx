@@ -33,21 +33,94 @@ export default function DK_DeteksiKomunitas(
           </h2>
 
           {/* Info Score - Evaluasi */}
-          <div className="mb-5 flex gap-5">
-            <CardAtom title={"Jumlah Komunitas"} content={evaluasi.jumlah_komunitas}
-              textTambahan="ini custom"
-              className="flex-1 bg-base-200 rounded-lg"
-            />
-            <CardAtom title={"Modularity Overlaping (O_uv)"} content={parseFloat(evaluasi.modularity_overlaping).toFixed(3)}
-              className="flex-1 bg-base-200 rounded-lg"
-            />
-            <CardAtom title={"Partition Density"} content={parseFloat(evaluasi.partition_density).toFixed(3)}
-              className="flex-1 bg-base-200 rounded-lg"
-            />
+          <div className="flex gap-3 mb-3 flex-col">
+            {/* Header Section - Highlight Angka Utama */}
+            <div
+              className="flex justify-center items-center gap-4 tooltip tooltip-bottom" data-tip="Jumlah Komunitas yang terbentuk">
+              <CardAtom
+                title={"Jumlah Komunitas"}
+                content={evaluasi.jumlah_komunitas}
+                className="flex-1 bg-base-200 rounded-xl shadow-sm text-center"
+              />
+            </div>
 
-            <CardAtom title={"Conductance"} content={parseFloat(evaluasi.conductane).toFixed(3)}
-              className="flex-1 bg-base-200 rounded-lg"
-            />
+            {/* Metrics Section - Grid yang Teratur */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip="Mengukur kualitas pengelompokan di mana satu node bisa masuk ke beberapa komunitas sekaligus.">
+                <CardAtom
+                  title={"Modularity Overlapping"}
+                  content={parseFloat(evaluasi.modularity_overlaping).toFixed(3)}
+                  className="bg-base-200 rounded-xl hover:shadow-md transition-shadow"
+                />
+              </div>
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip="Perbandingan jumlah hubungan nyata dengan total kemungkinan hubungan di dalam satu kelompok.
+                (Bandingkan dengan Dataset jika lebih unggul deteksi semakin bagus)">
+                <CardAtom
+                  title={"Density Komunitas"}
+                  content={parseFloat(evaluasi.density_deteksi).toFixed(3)}
+                  className="bg-base-200 rounded-xl"
+                />
+              </div>
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip="Ukuran kecenderungan antar node untuk saling terhubung membentuk segitiga (clique). 
+                (Bandingkan dengan Dataset jika lebih unggul deteksi semakin bagus)">
+                <CardAtom
+                  title={"Koefisien Kluster"}
+                  content={parseFloat(evaluasi.clust_coef_deteksi).toFixed(3)}
+                  className="bg-base-200 rounded-xl"
+                />
+              </div>
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip="Persentase total hubungan dalam jaringan yang berada di dalam kelompok-kelompok komunitas.">
+                <CardAtom
+                  title={"Coverage"}
+                  content={parseFloat(evaluasi.coverage).toFixed(3)}
+                  className="bg-base-200 rounded-xl"
+                />
+              </div>
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip="Rasio hubungan yang keluar meninggalkan kelompok dibandingkan dengan hubungan di dalam kelompok tersebut.">
+                <CardAtom
+                  title={"Conductance"}
+                  content={parseFloat(evaluasi.conductance).toFixed(3)}
+                  className="bg-base-200 rounded-xl"
+                />
+              </div>
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip="Selisih antara kepadatan hubungan internal komunitas dengan kepadatan yang terjadi secara acak.">
+                <CardAtom
+                  title={"Newman-Firvan Modularity"}
+                  content={parseFloat(evaluasi.newman_firvan_modularity).toFixed(3)}
+                  className="bg-base-200 rounded-xl"
+                />
+              </div>
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip="Metrik modularitas yang berbasis pada pengelompokan garis hubungan (edges) daripada titik (nodes).">
+                <CardAtom
+                  title={"Link Modularity"}
+                  content={parseFloat(evaluasi.link_modularity).toFixed(3)}
+                  className="bg-base-200 rounded-xl"
+                />
+              </div>
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip="Nilai statistik untuk menguji signifikansi kekuatan struktur komunitas dibandingkan model jaringan acak.">
+                <CardAtom
+                  title={"Z Modularity"}
+                  content={parseFloat(evaluasi.z_modularity).toFixed(3)}
+                  className="bg-base-200 rounded-xl"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Graf Komunitas Terbentuk */}
@@ -70,14 +143,14 @@ export default function DK_DeteksiKomunitas(
               <table className="table table-sm table-pin-rows table-pin-cols border-collapse">
                 <thead>
                   <tr className="text-center font-bold bg-base-200">
-                    {/* <th className="whitespace-nowrap text-center">#</th> */}
+                    <th className="whitespace-nowrap text-center">#</th>
                     <th className="whitespace-nowrap">Komunitas</th>
                     <th className="whitespace-nowrap">Jml Node</th>
                     <th className="min-w-38">Tipe</th>
                     <th className="min-w-[350px] text-left">Node Terdaftar</th>
                     <th className="whitespace-nowrap">Node Overlap</th>
                     <th className="whitespace-nowrap">Irisan Dengan</th>
-                    <th className="whitespace-nowrap">Rasio Overlapping (%)</th>
+                    <th className="whitespace-nowrap">Rasio Overlap (%)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -86,7 +159,7 @@ export default function DK_DeteksiKomunitas(
                     data.map((item, index) => (
                       // align-top membuat teks tetap di atas meskipun kolom sebelahnya panjang ke bawah
                       <tr key={index} className="align-top hover">
-                        {/* <td className="text-center font-semibold">{index + 1}</td> */}
+                        <th className="text-center font-semibold">{index + 1}</th>
                         <td className="text-center">{item.komunitas}</td>
                         <td className="text-center">{item.jumlah_node}</td>
                         <td className="text-center">

@@ -10,20 +10,19 @@ function App() {
   const [komunitasListData, setKomunitasListData] = useState(null);
   const handleDataFromDK = async (rawData) => {
     if (!rawData) return
-    
     const formatData = await formatDataListKomunitas(rawData)
     setKomunitasListData(formatData)
   }
 
   // Setting Tombol Keliatan
-  const [deteksiKomunitas, setDeteksiKomunitas] = useState(true);
-  const [enrichmentAnalysis, setEnrichmentAnalysis] = useState(true);
-  const lanjutDeteksiKomunitas = (data) => {
-    setDeteksiKomunitas(data);
-  }
-  const lanjutEnrichmentAnalysis = (data) => {
-    setEnrichmentAnalysis(data);
-  }
+  // const [deteksiKomunitas, setDeteksiKomunitas] = useState(false);
+  // const [enrichmentAnalysis, setEnrichmentAnalysis] = useState(false);
+  // const lanjutDeteksiKomunitas = (data) => {
+  //   setDeteksiKomunitas(data);
+  // }
+  // const lanjutEnrichmentAnalysis = (data) => {
+  //   setEnrichmentAnalysis(data);
+  // }
 
   return (
     // Jadi BOdy
@@ -38,28 +37,28 @@ function App() {
         {/* Input-Dataset */}
         <section id="input-dataset" className="w-full bg-base-100 rounded-lg p-6 shadow-sm">
           <InputDataset />
-          <button className="btn btn-soft btn-base-100 w-full rounded-lg mt-3" onClick={() => lanjutDeteksiKomunitas(true)}>Lanjut Deteksi Komunitas</button>
+          {/* <button className="btn btn-soft btn-base-100 w-full rounded-lg mt-3" onClick={() => lanjutDeteksiKomunitas(true)}>Lanjut Deteksi Komunitas</button> */}
         </section>
 
         {/* Deteksi-Komunitas */}
-        {deteksiKomunitas && (
+        {/* {deteksiKomunitas && ( */}
           <section id="deteksi-komunitas" className="w-full bg-base-100 rounded-lg p-6 shadow-sm">
             <DeteksiKomunitas
               handleDataFromDK={handleDataFromDK}
             />
-            <button className="btn btn-soft btn-base-100 w-full rounded-lg mt-3" onClick={() => lanjutEnrichmentAnalysis(true)}>Lanjut Enrichment Analysis</button>
+            {/* <button className="btn btn-soft btn-base-100 w-full rounded-lg mt-3" onClick={() => lanjutEnrichmentAnalysis(true)}>Lanjut Enrichment Analysis</button> */}
           </section>
-        )}
+        {/* )} */}
 
 
         {/* Enrichment-Analysis */}
-        {enrichmentAnalysis && (
+        {/* {enrichmentAnalysis && ( */}
           <section id="enrichment-analysis" className="w-full bg-base-100 rounded-lg p-6 shadow-sm">
             <EnrichmentAnalysis
               dataListKomunitas={komunitasListData}
             />
           </section>
-        )}
+        {/* )} */}
 
       </main>
     </div>

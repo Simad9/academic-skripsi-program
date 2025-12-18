@@ -35,28 +35,27 @@ const EnrichmentChartComponent = ({ data, label, selectedKomunitas }) => {
   // 3. Dynamic Height (Solusi Data Banyak)
   // Jika data ada 50, tinggi grafik jadi 50 * 30px = 1500px.
   // Minimal tinggi 450px agar tetap bagus jika data sedikit.
-  // const dynamicHeight = Math.max(450, data.length * 35 + 100);
+  // const dynamicHeight = Math.max(450, data.length * 35 + 100);  
 
   return (
     <div className='w-full'>
       <div className="flex justify-between items-center mb-4 px-2">
-        <label className="text-sm font-semibold text-gray-700">
-          Jumlah Data Ditampilkan:
+        <label className="text-sm font-semibold">
+          Jumlah Data Pada Grafik :
         </label>
         <select
           value={displayLimit}
           onChange={(e) => setDisplayLimit(e.target.value === 'All' ? 'All' : parseInt(e.target.value))}
-          className="border border-gray-300 rounded px-2 py-1 text-sm focus:outline-none focus:border-blue-500"
+          className="select select-xs"
         >
           <option value={5}>Top 5</option>
           <option value={10}>Top 10</option>
           <option value={20}>Top 20</option>
-          <option value={50}>Top 50</option>
           <option value="All">Tampilkan Semua (Berat)</option>
         </select>
       </div>
 
-      <div className="w-full overflow-x-auto flex justify-center">
+      <div className="w-full overflow-x-auto bg-white pt-4">
         <Plot
           data={[
             {
@@ -85,7 +84,11 @@ const EnrichmentChartComponent = ({ data, label, selectedKomunitas }) => {
             }
           ]}
           layout={{
-            title: { text: `Top ${displayLimit === 'All' ? processedData.length : displayLimit} Enrichment Terms`, font: { size: 16 } },
+            autosize: true,
+            title: {
+              text: `Top ${displayLimit === 'All' ? processedData.length : displayLimit} Enrichment Analysis ${label} ${selectedKomunitas ? `(Komunitas ${selectedKomunitas})` : ''}`,
+              font: { size: 16 }
+            },
             xaxis: { title: '-log10(p)', zeroline: false, gridcolor: '#eee' },
             yaxis: {
               automargin: true,
@@ -95,11 +98,11 @@ const EnrichmentChartComponent = ({ data, label, selectedKomunitas }) => {
             },
             margin: { l: 250, r: 50, t: 50, b: 50 },
             // height: dynamicHeight,
-            height: 400,
+            // height: processedData.length >= 10 ? 500 : 400,
             hovermode: 'closest',
           }}
           // Agar responsif mengikuti lebar container induk
-          style={{ width: '100%', height: '100%' }}
+          style={{ display: 'flex', justifyContent: 'center', width: '1100px', height: `${processedData.length >= 10 ? `500px` : `400px`}` }}
           useResizeHandler={true}
           config={{ displayModeBar: false }} // Menyembunyikan toolbar plotly (zoom, pan, dll) agar bersih
         />
