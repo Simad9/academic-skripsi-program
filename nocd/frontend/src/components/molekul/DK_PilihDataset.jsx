@@ -2,34 +2,31 @@ import ButtonAtom from "../atom/ButtonAtom";
 
 export default function DK_PilihDataset(
   {
-    sliderRequireScore,
-    // handleSliderValue,
     loadingDataset,
-    handleClickDataset
+    handleClickDataset,
+    // Untuk Data Child to Parrent
+    handleAmbilDataFileDataset
   }
 ) {
   return (
     <>
       <section className="mb-8">
         <h2 className="text-xl font-semibold font-poppins mb-3">
-          1. Pilih Dataset (.tsv)
+          1. Input Dataset
         </h2>
-        <div className="flex flex-col lg:flex-row gap-5  lg:gap-10 w-full justify-start align-items-center">
-          {/* Slider | Required Score */}
-          {/* <div className="w-full max-w-xs flex-1">
-            <p className="text-base font-montserrat font-medium mb-2 w-fit">Required Score : </p>
-            <div className="w-full max-w-xs">
-              <input type="range" min={0.400} max={0.900} defaultValue={sliderRequireScore} className="range" step="0.1" onChange={handleSliderValue} name="require_score" />
-              <div className="flex justify-between px-2.5 mt-2 text-xs">
-                <span>0.400</span>
-                <span>0.500</span>
-                <span>0.600</span>
-                <span>0.700</span>
-                <span>0.800</span>
-                <span>0.900</span>
-              </div>
-            </div>
-          </div> */}
+        <main className="flex flex-col lg:flex-row gap-5  lg:gap-6 w-full justify-start align-items-center">
+          {/* File | Dataset (.xlsx) */}
+          <div className="w-full max-w-xs flex-1">
+            <p className="text-base font-montserrat font-medium mb-2 w-fit">Input Dataset (.xlsx) : </p>
+            <input
+              type="file"
+              name="file_dataset"
+              className="file-input"
+              accept=".xlsx"
+              onChange={(e) => handleAmbilDataFileDataset(e.target.files[0])}
+              required // File wajib diunggah
+            />
+          </div>
           {/* Input | Require Score Fixed */}
           <div className="w-full max-w-xs flex-1">
             <p className="text-base font-montserrat mb-2 font-medium w-fit">Required Score : </p>
@@ -45,10 +42,10 @@ export default function DK_PilihDataset(
             <p className="text-base font-montserrat mb-2 font-medium w-fit">Network Type : </p>
             <input type="text" className="input" defaultValue="Full STRING network (functional)" />
           </div>
-        </div>
+        </main>
         {/* Button Submit */}
         <div className="max-w-xl">
-          <ButtonAtom loading={loadingDataset} text="Ambil Dataset" onClick={() => handleClickDataset(sliderRequireScore)} />
+          <ButtonAtom loading={loadingDataset} text="Ambil Dataset" onClick={handleClickDataset} />
         </div>
       </section>
     </>

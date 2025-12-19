@@ -1,13 +1,13 @@
 import { apiClient } from "./api";
 
 export async function fetchPilihDatasetData(formData) {
-  const url = "/pilih-dataset"; // Endpoint untuk mendapatkan data gambar STRINGDB
-
   try {
+    const url = "/pilih-dataset"; // Endpoint 
+
     // Axios otomatis menangani parsing JSON
     const response = await apiClient.post(url, formData, {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
     }); // Hanya perlu path endpoint
 
@@ -15,7 +15,7 @@ export async function fetchPilihDatasetData(formData) {
 
     // Cek apakah status dari backend Django adalah 'success'
     if (result.status === "success") {
-      return result.data; // Mengembalikan array data
+      return result; // Mengembalikan array data
     } else {
       // Melempar error jika backend mengembalikan status non-success
       // Axios akan melempar error untuk status 4xx/5xx, tapi ini menangani status 'success' custom dari body respons.
@@ -44,14 +44,14 @@ export async function fetchPilihDatasetData(formData) {
 }
 
 export async function fetchTabelDatasetData(formData) {
-  const url = "/tabel-dataset"; // Endpoint untuk mendapatkan data gambar STRINGDB
-
   try {
+    const url = "/tabel-dataset"; // Endpoint 
+
     // Axios otomatis menangani parsing JSON
     const response = await apiClient.post(url, formData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
     }); // Hanya perlu path endpoint
 
     const result = response.data; // Data respons dari server ada di properti .data

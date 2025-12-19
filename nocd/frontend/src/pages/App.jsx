@@ -34,11 +34,11 @@ function App() {
           <Navbar />
         </section>
 
-        {/* Input-Dataset */}
-        <section id="input-dataset" className="w-full bg-base-100 rounded-lg p-6 shadow-sm">
+        {/* Input-Dataset | NOTE : Tidak dipakai karena redunddan di halamannya */}
+        {/* <section id="input-dataset" className="w-full bg-base-100 rounded-lg p-6 shadow-sm">
           <InputDataset />
-          {/* <button className="btn btn-soft btn-base-100 w-full rounded-lg mt-3" onClick={() => lanjutDeteksiKomunitas(true)}>Lanjut Deteksi Komunitas</button> */}
-        </section>
+          <button className="btn btn-soft btn-base-100 w-full rounded-lg mt-3" onClick={() => lanjutDeteksiKomunitas(true)}>Lanjut Deteksi Komunitas</button>
+        </section> */}
 
         {/* Deteksi-Komunitas */}
         {/* {deteksiKomunitas && ( */}

@@ -17,7 +17,8 @@ export default function DeteksiKomunitas({ handleDataFromDK }) {
   // 2.1. Data Detail Dataset
   const {
     dataset, loadingDataset, errorDataset, handleClickDataset,
-    tabelDataset, handlePageChange, newPage
+    tabelDataset, handlePageChange, newPage,
+    fileDataset, handleAmbilDataFileDataset
   } = usePilihDataset();
 
   // 2.3. Input Model
@@ -50,8 +51,14 @@ export default function DeteksiKomunitas({ handleDataFromDK }) {
         sliderRequireScore={sliderRequireScore}
         handleSliderValue={handleSliderValue}
         loadingDataset={loadingDataset}
-        // handleClickDataset={() => handleClickDataset(sliderRequireScore)}
-        handleClickDataset={() => handleClickDataset(sliderRequireScore)}
+        handleClickDataset={() => {
+          if (!fileDataset) {
+            alert("File belum dipilih!");
+            return;
+          }
+          handleClickDataset(fileDataset, sliderRequireScore);
+        }}
+        handleAmbilDataFileDataset={handleAmbilDataFileDataset}
       />
 
       {/* 2. Hasil Ambil Dataset */}

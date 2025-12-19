@@ -15,6 +15,22 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 - Bikin Component Untuk Judul (Pikir Nanti)
 
 ## Task Date per Date
+
+---
+
+`18/12/2025` - `Baru 30 menit-an catat selesai api`
+
+### Task
+
+- [x] Input sama Deteksi jadi satu
+- [ ] Update UI Evaluasi
+
+### Notes
+
+- Input sama deteksi jadi satu, karena terlihat redundan habis bimbingan disarankan begitu saja
+- Evaluasinya cukup pake yang unsupervised aja, buat buktiin kalo modelnya berhasil untuk melakukan deteksi komunitas overlapingnya
+- 
+
 ---
 
 `18/12/2025` - `Baru 30 menit-an catat selesai api`
@@ -22,8 +38,8 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 ### Task
 
 - [x] API evaluasi belum berhasil di buat
-- [ ] Bikin Video Demo Awal aplikasi jadi (buat bimbingan)
-- [ ] Bikin Video Yang Filenya langsungan itu (buat bimbingan)
+- [x] Bikin Video Demo Awal aplikasi jadi (buat bimbingan)
+- [x] Bikin Video Yang Filenya langsungan itu (buat bimbingan)
 - [x] Dokumentasi Postman BE
 
 ### Notes
@@ -41,7 +57,7 @@ Pencatatan pada Dev Notes ini ketika melakukan atau merombak `Tampilan Web`, sel
 - [x] Menambahkan Plotly.js untuk graf hasil deteksi komunitas dan enrichment analysis
 - [ ] Bikin Video Demo Awal aplikasi jadi
 - [ ] Bikin Video Yang Filenya langsungan itu
-c
+      c
 
 ### Notes
 

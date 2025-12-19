@@ -143,7 +143,7 @@ def detail_dataset(require_score):
   n_edges = A.nnz // 2  # Undirected
   # Density 
   density = (2 * n_edges) / (n_nodes * (n_nodes - 1))
-  # Clustering Coefficient
+  # Clustering Coefficient 
   num_triangles = (A @ A @ A).diagonal().sum() / 6
   num_possible_triangles = (n_nodes - 2) * (n_nodes - 1) * n_nodes / 6
   clust_coef_baseline = num_triangles / num_possible_triangles
@@ -252,8 +252,8 @@ def membuat_peta_keanggotaan(communities_list, node_names):
 
   for i, community_indices in enumerate(communities_list):
       # Skip jika komunitas kosong
-      # if len(community_indices) == 0:
-      #     continue
+      if len(community_indices) == 0:
+          continue
 
       comm_id = i + 1
       

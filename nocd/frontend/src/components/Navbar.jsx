@@ -25,21 +25,25 @@ export default function Navbar() {
               tabIndex={-1}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
-              <li>
+
+              <li><a href="#deteksi-komunitas">Deteksi Komunitas</a></li>
+              <li><a href="#enrichment-analysis">Enrichment Analysis</a></li>
+
+              {/* Jika Informasi udah dibuat baru di open lagi */}
+              {/* <li>
                 <details>
                   <summary>Menu Program</summary>
                   <ul className="bg-base-100 rounded-t-none p-2">
-                    <li><a href="#input-dataset">Input Dataset</a></li>
                     <li><a href="#deteksi-komunitas">Deteksi Komunitas</a></li>
                     <li><a href="#enrichment-analysis">Enrichment Analysis</a></li>
                   </ul>
                 </details>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a href="#input-dataset">
                   Informasi
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
           <a href="#" className="flex align-center gap-1">
@@ -56,21 +60,22 @@ export default function Navbar() {
 
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 font-poppins gap-2">
-            <li>
+            <li><a href="#deteksi-komunitas">Deteksi Komunitas</a></li>
+            <li><a href="#enrichment-analysis">Enrichment Analysis</a></li>
+            {/* <li>
               <details>
                 <summary>Menu Program</summary>
                 <ul className="bg-base-100 rounded-t-none p-2">
-                  <li><a href="#input-dataset">Input Dataset</a></li>
                   <li><a href="#deteksi-komunitas">Deteksi Komunitas</a></li>
                   <li><a href="#enrichment-analysis">Enrichment Analysis</a></li>
                 </ul>
               </details>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <a href="#input-dataset">
                 Informasi
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
 

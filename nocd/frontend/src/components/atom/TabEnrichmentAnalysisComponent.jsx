@@ -32,7 +32,7 @@ export default function TabEnrichmentAnalysisComponent({ datas, label, selectedK
           <div className="tab-content border-base-300 bg-base-100 p-4">
             {/* Graf */}
             <div className="w-full rounded-lg mb-5">
-              <h2 className="w-fit font-poppins text-lg font-semibold mb-2">Graf Enrichment Analysis</h2>
+              <h2 className="w-fit font-poppins text-lg font-semibold mb-2">Bubble Graf Enrichment Analysis</h2>
               {/* <img
                 src="https://placehold.co/2000x500/?text=Graf Enrichment Analysis"
                 alt="Graf Enrichment Analysis"
@@ -47,14 +47,18 @@ export default function TabEnrichmentAnalysisComponent({ datas, label, selectedK
             </div>
 
             {/* Tabel */}
+            <div className="w-full rounded-lg mb-5">
+              <h2 className="w-fit font-poppins text-lg font-semibold mb-2">Tabel Enrichment Analysis</h2>
+            </div>
             <div className="overflow-x-auto max-h-[400px] border border-nocd/50 rounded-lg">
               <table className="table border-collapse table-fixed w-full">
                 <thead>
                   <tr className="font-bold bg-base-200">
                     <th className="w-[10%] whitespace-nowrap">Term ID</th>
-                    <th className="w-[40%]">Nama Term</th>
-                    <th className="w-[15%] whitespace-nowrap">P-Value</th>
-                    <th className="w-[15%] whitespace-nowrap">Total Gene</th>
+                    <th className="w-[45%]">Nama Term</th>
+                    <th className="w-[10%] whitespace-nowrap">P-Value</th>
+                    <th className="w-[10%] whitespace-nowrap">-Logp</th>
+                    <th className="w-[5%] whitespace-nowrap">Total Gene</th>
                     <th className="w-[20%] whitespace-nowrap text-center">Aksi</th>
                   </tr>
                 </thead>
@@ -69,6 +73,7 @@ export default function TabEnrichmentAnalysisComponent({ datas, label, selectedK
                           <td className="truncate">{data.term_id}</td>
                           <td className="whitespace-normal">{data.term_name}</td>
                           <td>{data.p_value}</td>
+                          <td>{data.log10p}</td>
                           <td>{data.gene_count}</td>
                           <td className="text-center">
                             <button
@@ -82,7 +87,7 @@ export default function TabEnrichmentAnalysisComponent({ datas, label, selectedK
 
                         {isOpen && (
                           <tr className="w-full">
-                            <td colSpan="5" className="p-0 border-none">
+                            <td colSpan="6" className="p-0 border-none">
                               <div className="mx-3 my-2 bg-primary-content text-primary border-base-300 border rounded-lg overflow-hidden">
                                 <div className="p-3 flex justify-between bg-nocd/50 items-center">
                                   <h1 className="font-semibold text-base">

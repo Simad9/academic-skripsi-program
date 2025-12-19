@@ -22,95 +22,60 @@ def index(request):
   return render(request, "index.html", context)
 
 # ==== Untuk API - Skripsi - BE - Endpoint API  ====
-# ~ Input Dataset ~
-"""
-Input Dataset (.xlsx) lalu ubah menjadi viasualisasi image STRINGDB
-Tujuan : Visualisasi Graf STRINGDB Secara garis besar
-Input : File - Dataset (.xlsx)
-Output : Gambar Graf STRINGDB
-"""
-@csrf_exempt
-def stringdb_image(request):
-  # Cek method POST
-  if request.method != "POST":
-      return JsonResponse({"error": "Hanya menerima POST request"}, status=405)
-  
-  # Ambil Data dari File
-  file = request.FILES.get("file_dataset")
-  
-  # Jika buka file
-  if not file:
-    return JsonResponse({"error": "tidak ada file yang diupload"}, status=400)
-
-  # Simpan file di direktori "uploads"
-  upload_dir = os.path.join(settings.BASE_DIR, 'uploads') 
-  os.makedirs(upload_dir, exist_ok=True)
-
-  # Path file
-  file_path = os.path.join(upload_dir, file.name)
-
-  # Simpan file di direktori uploads
-  with open(file_path, "wb") as f:
-    for chunk in file.chunks():
-      f.write(chunk)
-    
-  # Baca Excel
-  try:
-    df = pd.read_excel(file_path)      
-  except Exception as e:
-    return JsonResponse({"error": f"Failed to read excel: {str(e)}"}, status=500)
-
-  # Cek Kolom gen
-  if 'Gen' not in df.columns:
-      return JsonResponse({"error": "Kolom 'Gen' tidak ditemukan pada file."}, status=400)
-  
-  # Buat menjadi list
-  data_list = df['Gen'].dropna().astype(str).tolist()
-    
-  # Ambil data dari STRINGDB API
-  try: 
-    img_path = stringdb_fetch_api_img(data_list)  # harus mengembalikan path relatif di static, mis "files/stringdb_image.png"
-  except Exception as e:
-    return JsonResponse({"error": f"{str(e)}"}, status=500)    
-   
-  # setup data
-  data = {
-    "status": "success",
-    "message": "Gambar STRINGDB berhasil dibuat",
-    "data": {
-      "img_path": f"http://localhost:8000{static(img_path)}",
-    }
-  }
-
-  # kembalikan json data
-  return JsonResponse(data, status=200)
-
 # ~ Deteksi Komunitas ~
-"""
-Pilih Dataset (.tsv) dari STRINGDB sesuai dengan require_score
-Tujuan : Agar User bisa bebas mau pake dataset yang gimana
-Input : String - require_score
-Output : Statistik Dataset yang dipilih
-"""
 @csrf_exempt
 def pilih_dataset(request):
     # Cek method dah bener belum
     if request.method != "POST":
         return JsonResponse({"error": "Hanya menerima POST request"}, status=405)    
     
-    # Setup JSON simpelnya
-    try:    
-        input_data = json.loads(request.body.decode('utf-8'))        
-    except json.JSONDecodeError:
-        return JsonResponse({"error": "Invalid JSON format"}, status=400)
+    # Ambil Data dari File
+    file = request.FILES.get("file_dataset")
+    # Jika buka file
+    if not file:
+      return JsonResponse({"error": "tidak ada file yang diupload"}, status=400)
+    # Simpan file di direktori "uploads"
+    upload_dir = os.path.join(settings.BASE_DIR, 'uploads') 
+    os.makedirs(upload_dir, exist_ok=True)
+    # Path file
+    file_path = os.path.join(upload_dir, file.name)
+    # Simpan file di direktori uploads
+    with open(file_path, "wb") as f:
+      for chunk in file.chunks():
+        f.write(chunk)
+
+    # === Olah Dataset ===
+    # Baca Excel
+    try:
+      df = pd.read_excel(file_path)      
+    except Exception as e:
+      return JsonResponse({"error": f"Failed to read excel: {str(e)}"}, status=500)
+
+    # Cek Kolom gen
+    if 'Gen' not in df.columns:
+        return JsonResponse({"error": "Kolom 'Gen' tidak ditemukan pada file."}, status=400)
     
-    require_score = str(input_data.get("require_score"))  
+    # Buat menjadi list
+    data_list = df['Gen'].dropna().astype(str).tolist()
+      
+    # Ambil data dari STRINGDB API
+    try: 
+      img_path = stringdb_fetch_api_img(data_list)  # harus mengembalikan path relatif di static, mis "files/stringdb_image.png"
+    except Exception as e:
+      return JsonResponse({"error": f"{str(e)}"}, status=500)    
+
+    # Buat jadi path dari server localhost:8000
+    img_path = f"http://localhost:8000{static(img_path)}"
+
+    # === Ambil Data detail ===
+    require_score = str(request.POST.get("require_score"))
     detail = detail_dataset(require_score)
    
     # setup data response
     response_data = {
         "status": "success",
         "message": "Hasil Dataset berhasil dimuat",
+        "img_path": img_path,
         "data": detail
     }
 
@@ -128,15 +93,21 @@ def tabel_dataset(request):
   if request.method != "POST":
     return JsonResponse({"error": "Hanya menerima POST request"}, status=405) 
   
-  # Setup JSON simpelnya
-  try:    
-    input_data = json.loads(request.body.decode('utf-8'))        
-  except json.JSONDecodeError:
-    return JsonResponse({"error": "Invalid JSON format"}, status=400)
+  # # Setup JSON simpelnya
+  # try:    
+  #   input_data = json.loads(request.body.decode('utf-8'))        
+  # except json.JSONDecodeError:
+  #   return JsonResponse({"error": "Invalid JSON format"}, status=400)
   
-  # Ambil Data JSON
-  require_score = str(input_data.get("require_score"))     
-  page = int(input_data.get("page", 1))
+  # # Ambil Data JSON
+  # require_score = str(input_data.get("require_score"))     
+  # page = int(input_data.get("page", 1))
+  # dataset_result = ambil_tabel_dataset(require_score, page=page, page_size=20)
+
+  # # Versi POST
+  # === Ambil Data detail ===
+  require_score = str(request.POST.get("require_score"))
+  page = int(request.POST.get("page"))
   dataset_result = ambil_tabel_dataset(require_score, page=page, page_size=20)
 
   # setup data response
@@ -243,7 +214,6 @@ def enrichment_analysis_komunitas(request):
   data = {
     "status": "success",
     "message": f"Enrichment Analysis berhasil didapat",
-    # "gene_list": gene_list,
     "data": result
   }
 

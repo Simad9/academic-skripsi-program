@@ -27,21 +27,31 @@ export const usePilihDataset = () => {
 
   const [newPage, setNewPage] = useState(1);
 
-  const handleClickDataset = async (require_score) => {
+  const [fileDataset, setFileDataset] = useState(null);
+  const handleAmbilDataFileDataset = (file) => {
+    setFileDataset(file);
+  };
+
+  const handleClickDataset = async (file, require_score) => {
+    if (!file || !(file instanceof File)) {
+      console.error("Error: Objek file tidak valid atau hilang!");
+      return;
+    }
+
     setLoadingDataset(true);
     setErrorDataset(null);
 
     setNewPage(1);
 
-    const reqData = {
-      require_score: String(require_score * 1000),
-      page: 1,
-    };
+    const formData = new FormData();
+    formData.append("file_dataset", file);
+    formData.append("require_score", String(require_score * 1000));
+    formData.append("page", "1");
 
     try {
       const [fetchPilihDataset, fetchTabelDataset] = await Promise.all([
-        fetchPilihDatasetData(reqData),
-        fetchTabelDatasetData(reqData),
+        fetchPilihDatasetData(formData),
+        fetchTabelDatasetData(formData),
       ]);
       setDataset(fetchPilihDataset);
       setTabelDataset(fetchTabelDataset);
@@ -56,14 +66,15 @@ export const usePilihDataset = () => {
 
   const handlePageChange = async (require_score, newPage) => {
     try {
-      const reqData = {
-        require_score: String(require_score * 1000),
-        page: newPage,
-      };
+      const formData = new FormData();
+      formData.append("require_score", String(require_score * 1000));
+      formData.append("page", String(newPage));
 
-      console.log("Fetching Page:", newPage, "with Score:", reqData.require_score);
+      console.log(
+        `Fetching Page: ${newPage}, with Score: ${String(require_score * 1000)}`
+      );
 
-      const fetchTabelDataset = await fetchTabelDatasetData(reqData);
+      const fetchTabelDataset = await fetchTabelDatasetData(formData);
       setTabelDataset(fetchTabelDataset);
       console.log("Data berhasil di ambil", fetchTabelDataset);
       setNewPage(newPage); // Update state page setelah berhasil
@@ -80,6 +91,8 @@ export const usePilihDataset = () => {
     tabelDataset,
     handlePageChange,
     newPage,
+    fileDataset,
+    handleAmbilDataFileDataset
   };
 };
 

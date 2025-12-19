@@ -63,7 +63,7 @@ const EnrichmentChartComponent = ({ data, label, selectedKomunitas }) => {
               y: yValues,
               mode: 'markers',
               // OPTIONAL: Ganti type ke 'scattergl' jika data > 500
-              // type: 'scattergl', 
+              type: 'scattergl',
               marker: {
                 size: markerSizes,
                 color: xValues,

@@ -106,12 +106,12 @@ export default function DK_MasukanModel(
                   </div>
                 </div>
                 <p className="text-sm font-poppins font-normal mt-4 w-fit">Konektivitas internal minimum untuk komunitas yang valid</p>
-                <p className="text-sm font-poppins font-normal w-fit">Rekomendasi:
+                {/* <p className="text-sm font-poppins font-normal w-fit">Rekomendasi:
                   <span className="badge badge-soft badge-secondary text-sm"> 0.1</span>
                   -
                   <span className="badge badge-soft badge-secondary text-sm">0.4 </span>
                   untuk jaringan protein
-                </p>
+                </p> */}
               </div>
             </div>
             {/* Button Submit */}
