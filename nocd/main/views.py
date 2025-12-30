@@ -133,8 +133,25 @@ def input_model(request):
   
   # Ambil Data dari File
   file = request.FILES.get("file_model")
-  filename = file.name
 
+  # Jika buka file
+  if not file:
+    return JsonResponse({"error": "tidak ada file yang diupload"}, status=400)
+  
+  # Simpan file di direktori "models"
+  upload_dir = os.path.join(settings.BASE_DIR, 'main', 'code_ml', 'models') 
+  os.makedirs(upload_dir, exist_ok=True)
+
+  # Amankan nama file
+  filename = file.name
+  file_path = os.path.join(upload_dir, filename)
+
+  # Simpan file
+  with open(file_path, "wb+") as destination:
+      for chunk in file.chunks():
+          destination.write(chunk)
+
+  # Ambil config model (jika ada)
   config = ambil_config_model(filename)
 
    # setup data
