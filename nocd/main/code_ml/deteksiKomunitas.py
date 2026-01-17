@@ -336,7 +336,17 @@ def deteksi_komunitas_proses(nama_file_model, threshold, require_score):
   # Pembilahan Matriksnya
   with torch.no_grad():
     Z = F.relu(model(data_norm, adj_norm))
-  Z_pred = Z.cpu().detach().numpy() > threshold
+  Z_numpy = Z.cpu().detach().numpy() 
+  Z_pred = Z_numpy > threshold
+
+  # Deteksi Node "Jombol" (Tanpa Komuntas) - (Sefety Net)
+  num_orphans = Z_pred.sum(axis=1) == 0
+  if num_orphans.any():
+      orphan_rows = Z_numpy[num_orphans]
+      best_community_indices = orphan_rows.argmax(axis=1)
+      node_indices = np.where(num_orphans)[0]
+      Z_pred[node_indices, best_community_indices] = True
+      node_tanpa_komunitas = (Z_pred.sum(axis=1) == 0).sum()
 
   # Komunitas List
   communities_list = utils.coms_matrix_to_list(Z_pred)  
@@ -392,6 +402,7 @@ def deteksi_komunitas_proses(nama_file_model, threshold, require_score):
 
   # Pemetaan JSON evaluasi
   evaluasi = {
+    "node_tanpa_komunitas": int(node_tanpa_komunitas) if 'node_tanpa_komunitas' in locals() else 0,
     "jumlah_komunitas": len(node_membership),
     "coverage": eval_metric['coverage'],
     "conductance": eval_metric['conductance'],
