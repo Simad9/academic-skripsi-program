@@ -29,12 +29,22 @@ export const usePilihDataset = () => {
 
   const [fileDataset, setFileDataset] = useState(null);
   const handleAmbilDataFileDataset = (file) => {
+    console.log("File dataset dipilih:", file);
+    if (
+      file.type !=
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    ) {
+      setErrorDataset("Format file harus .xlsx");
+      return;
+    }
     setFileDataset(file);
   };
 
   const handleClickDataset = async (file, require_score) => {
     if (!file || !(file instanceof File)) {
       console.error("Error: Objek file tidak valid atau hilang!");
+      // alert("File belum dipilih!");
+      setErrorDataset("File dataset tidak ditemukan.");
       return;
     }
 
@@ -71,7 +81,7 @@ export const usePilihDataset = () => {
       formData.append("page", String(newPage));
 
       console.log(
-        `Fetching Page: ${newPage}, with Score: ${String(require_score * 1000)}`
+        `Fetching Page: ${newPage}, with Score: ${String(require_score * 1000)}`,
       );
 
       const fetchTabelDataset = await fetchTabelDatasetData(formData);
@@ -92,7 +102,7 @@ export const usePilihDataset = () => {
     handlePageChange,
     newPage,
     fileDataset,
-    handleAmbilDataFileDataset
+    handleAmbilDataFileDataset,
   };
 };
 

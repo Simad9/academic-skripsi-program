@@ -87,34 +87,73 @@ Tujuan : Memperlihatkan ke user kalo isi datasetnya begitu
 Input : String - require_score
 Output : Tabel Dataset sudah pagination
 """
+# @csrf_exempt
+# def tabel_dataset(request):
+#   # Cek method dah bener belum
+#   if request.method != "POST":
+#     return JsonResponse({"error": "Hanya menerima POST request"}, status=405) 
+  
+#   # # Setup JSON simpelnya
+#   # try:    
+#   #   input_data = json.loads(request.body.decode('utf-8'))        
+#   # except json.JSONDecodeError:
+#   #   return JsonResponse({"error": "Invalid JSON format"}, status=400)
+  
+#   # # Ambil Data JSON
+#   # require_score = str(input_data.get("require_score"))     
+#   # page = int(input_data.get("page", 1))
+#   # dataset_result = ambil_tabel_dataset(require_score, page=page, page_size=20)
+
+#   # # Versi POST
+#   # === Ambil Data detail ===
+#   require_score = str(request.POST.get("require_score"))
+#   page = int(request.POST.get("page"))
+#   dataset_result = ambil_tabel_dataset(require_score, page=page, page_size=20)
+
+#   # setup data response
+#   response_data = {
+#     "status": "success",
+#     "message": f"Tabel Dataset halaman {page} ditampilkan",
+#     "data": dataset_result
+#   }
+
+#   return JsonResponse(response_data, status=200)
 @csrf_exempt
 def tabel_dataset(request):
-  # Cek method dah bener belum
   if request.method != "POST":
-    return JsonResponse({"error": "Hanya menerima POST request"}, status=405) 
-  
-  # # Setup JSON simpelnya
-  # try:    
-  #   input_data = json.loads(request.body.decode('utf-8'))        
-  # except json.JSONDecodeError:
-  #   return JsonResponse({"error": "Invalid JSON format"}, status=400)
-  
-  # # Ambil Data JSON
-  # require_score = str(input_data.get("require_score"))     
-  # page = int(input_data.get("page", 1))
-  # dataset_result = ambil_tabel_dataset(require_score, page=page, page_size=20)
+        return JsonResponse({"error": "Hanya menerima POST request"}, status=405) 
 
-  # # Versi POST
-  # === Ambil Data detail ===
-  require_score = str(request.POST.get("require_score"))
-  page = int(request.POST.get("page"))
+  # 1. Ambil data raw
+  require_score_raw = request.POST.get("require_score")
+  page_raw = request.POST.get("page")
+
+  # 2. Validasi: Jika data kosong, kembalikan 400 Bad Request
+  if not require_score_raw or not page_raw:
+      return JsonResponse({
+          "status": "error",
+          "message": "Parameter require_score dan page wajib diisi"
+      }, status=400)
+
+  # 3. Validasi: Pastikan 'page' adalah angka
+  try:
+      page = int(page_raw)
+      require_score = str(require_score_raw)
+  except (ValueError, TypeError):
+      return JsonResponse({
+          "status": "error",
+          "message": "Parameter page harus berupa angka valid"
+      }, status=400)
+
+  # 4. Lanjutkan proses jika validasi lolos
   dataset_result = ambil_tabel_dataset(require_score, page=page, page_size=20)
+  
+  if dataset_result is None:
+      return JsonResponse({"error": "Dataset tidak ditemukan"}, status=404)
 
-  # setup data response
   response_data = {
-    "status": "success",
-    "message": f"Tabel Dataset halaman {page} ditampilkan",
-    "data": dataset_result
+      "status": "success",
+      "message": f"Tabel Dataset halaman {page} ditampilkan",
+      "data": dataset_result
   }
 
   return JsonResponse(response_data, status=200)

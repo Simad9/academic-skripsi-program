@@ -9,7 +9,7 @@ export const titikTiga = (data) => {
 
 // Float Enam Angka Belakang Koma
 export const enamAngkaBelakangKoma = (data) => {
-  return parseFloat(data).toFixed(6);
+  return parseFloat(data).toFixed(4);
 };
 
 // Ubah data untuk komunitas

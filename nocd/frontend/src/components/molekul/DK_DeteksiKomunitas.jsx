@@ -53,7 +53,7 @@ export default function DK_DeteksiKomunitas(
                 (Bandingkan dengan Dataset jika lebih unggul deteksi semakin bagus)">
                 <CardAtom
                   title={"Density Komunitas"}
-                  content={parseFloat(evaluasi.density_deteksi).toFixed(3)}
+                  content={parseFloat(evaluasi.density_deteksi).toFixed(4)}
                   className="bg-base-200 rounded-xl"
                 />
               </div>
@@ -63,7 +63,7 @@ export default function DK_DeteksiKomunitas(
                 (Bandingkan dengan Dataset jika lebih unggul deteksi semakin bagus)">
                 <CardAtom
                   title={"Koefisien Kluster"}
-                  content={parseFloat(evaluasi.clust_coef_deteksi).toFixed(3)}
+                  content={parseFloat(evaluasi.clust_coef_deteksi).toFixed(4)}
                   className="bg-base-200 rounded-xl"
                 />
               </div>
@@ -72,7 +72,7 @@ export default function DK_DeteksiKomunitas(
                 data-tip="Persentase total hubungan dalam jaringan yang berada di dalam kelompok-kelompok komunitas.">
                 <CardAtom
                   title={"Coverage"}
-                  content={parseFloat(evaluasi.coverage).toFixed(3)}
+                  content={parseFloat(evaluasi.coverage).toFixed(4)}
                   className="bg-base-200 rounded-xl"
                 />
               </div>
@@ -81,7 +81,7 @@ export default function DK_DeteksiKomunitas(
                 data-tip="Rasio hubungan yang keluar meninggalkan kelompok dibandingkan dengan hubungan di dalam kelompok tersebut.">
                 <CardAtom
                   title={"Conductance"}
-                  content={parseFloat(evaluasi.conductance).toFixed(3)}
+                  content={parseFloat(evaluasi.conductance).toFixed(4)}
                   className="bg-base-200 rounded-xl"
                 />
               </div>

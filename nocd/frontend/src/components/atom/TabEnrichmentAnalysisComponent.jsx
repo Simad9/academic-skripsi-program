@@ -70,7 +70,9 @@ export default function TabEnrichmentAnalysisComponent({ datas, label, selectedK
                     return (
                       <Fragment key={index}>
                         <tr>
-                          <td className="truncate">{data.term_id}</td>
+                          <td className="truncate hover:text-nocd">
+                            <a href={`https://amigo.geneontology.org/amigo/term/${data.term_id}`} target="_blank">{data.term_id}</a>
+                          </td>
                           <td className="whitespace-normal">{data.term_name}</td>
                           <td>{data.p_value}</td>
                           <td>{data.log10p}</td>

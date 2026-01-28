@@ -52,10 +52,10 @@ export default function DeteksiKomunitas({ handleDataFromDK }) {
         handleSliderValue={handleSliderValue}
         loadingDataset={loadingDataset}
         handleClickDataset={() => {
-          if (!fileDataset) {
-            alert("File belum dipilih!");
-            return;
-          }
+          // if (!fileDataset) {
+          //   alert("File belum dipilih!");
+          //   return;
+          // }
           handleClickDataset(fileDataset, sliderRequireScore);
         }}
         handleAmbilDataFileDataset={handleAmbilDataFileDataset}
