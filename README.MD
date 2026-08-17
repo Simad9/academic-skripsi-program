@@ -9,6 +9,10 @@ Projek Skripsi milik Wijdan, bidang **Bioinformatika**, dengan judul:
 
 Sistem mendeteksi komunitas tumpang tindih (overlapping community) pada jaringan interaksi protein (PPI) yang diambil dari **STRING-DB**. Model yang digunakan adalah **NOCD** (Neural Overlapping Community Detection) — gabungan **GNN** (Graph Neural Network) dengan **BP** (Bernoulli-Poisson). Aplikasi dibangun dengan **Django** sebagai backend (REST API) dan **React** sebagai frontend.
 
+## Demo Aplikasi
+
+**Video demo aplikasi:** https://youtu.be/eidj0SFhOV4
+
 ## Tech Stack
 
 | Bagian | Teknologi |
