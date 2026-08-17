@@ -1,35 +1,139 @@
-# Program Skripi
+# Program Skripsi
 ---
-Program skripsi milik Wijdan \
-Bioinformatika tentang GNN di terapkan di Django sebagai FE nya nanti \
 
-### Penjelasan Sederhana Folder
-- `venv` = environtment khusus untuk ini
-- `nocd` = program django dan tampilannya
-- `sumber` = sumber ML/DP
+## Deskripsi Singkat
 
-### Tech Stack
-- Django
-- Tailwind 
-- DaisyUI
+Projek Skripsi milik Wijdan, bidang **Bioinformatika**, dengan judul:
 
-### Library ML/DP
-- pytorch
+> **DETEKSI KOMUNITAS TUMPANG TINDIH PADA JARINGAN INTERAKSI PROTEIN KANKER GINJAL BERBASIS GRAPH NEURAL NETWORK**
 
-### How To Start Project for Developer (Wijdan)
-- `act` atau aktifkan environemtn dulu
-- `cd nocd` masuk ke folder nocd, mengaktifkan command npm
-- `npm run dev` menjalankan server python dan tailwindcss
+Sistem mendeteksi komunitas tumpang tindih (overlapping community) pada jaringan interaksi protein (PPI) yang diambil dari **STRING-DB**. Model yang digunakan adalah **NOCD** (Neural Overlapping Community Detection) — gabungan **GNN** (Graph Neural Network) dengan **BP** (Bernoulli-Poisson). Aplikasi dibangun dengan **Django** sebagai backend (REST API) dan **React** sebagai frontend.
 
-### How to start project for User
-- `git clone https://github.com/Simad9/program-skripsi.git` ~ untuk clone repo
-- `cd "nama-project"` disini `cd program-skripsi` ~ masuk ke folder
-- `python -3.11 -m venv venv` saya menggunakan versi 3.11 untuk environmentnya ~ membuat environtment
-- `.\venv\Scripts\activate` ~ aktifkan environtment
-- BONUS = saya kasih alias untuk mengaktifkan environtment
-- BONUS = `notepad $PROFILE` lalu masukan `set-alias act .\venv\Scripts\activate` sehingga setiap mau aktifkan cukup ketik `act` saja
-- `pip install -r requirements.txt` ~ install semua library yang ada di requirements.txt
-- NOTES = silahkan sesuaikan nama filenya `requirements_vx.txt`, karena library akan diupdate kalo ingat
-- `cd nocd` ~ masuk ke folder nocd
-- `npm run dev` ~ menjalankan server python dan tailwindcss
-- Silahkan jalankan di browser `http://127.0.0.1:8000/`
+## Tech Stack
+
+| Bagian | Teknologi |
+|--------|-----------|
+| Backend | Django 5.2 + REST API (JSON) |
+| Frontend | React 19 + Vite |
+| Styling | Tailwind CSS 4 + DaisyUI 5 |
+| Model GNN | PyTorch + NOCD (Graph Neural Network + Bernoulli-Poisson) |
+| Graph / Evaluasi | NetworkX, cdlib (modularity, density, dsb.) |
+| Data Interaksi Protein | STRING-DB (STRING-db API & Web TSV) |
+| Visualisasi | Plotly.js (grafik jaringan / komunitas) |
+
+## Arsitektur Folder
+
+```
+program-skripsi/
+├── temp/
+│   └── overlapping-community-detection/   # Workspace uji coba & pembuatan model GNN
+│                                          # (notebook skripsi, eksperimen, tuning, dataset)
+├── venv/                                  # Python environment khusus projek ini
+├── nocd/                                  # Projek utama (Django + Frontend)
+│   ├── frontend/                          # Frontend React (Vite + Tailwind + DaisyUI + Plotly)
+│   ├── main/                              # App Django (views/API, templates, static)
+│   │   └── code_ml/                       # Kode ML/DP
+│   │       ├── gnn_lib/                   # Library GNN NOCD (gcn, decoder, train, metrics)
+│   │       ├── models/                    # Model GNN terlatih (*.pth)
+│   │       ├── deteksiKomunitas.py        # Proses deteksi komunitas
+│   │       ├── enrichmentAnalysis.py      # Proses enrichment analysis
+│   │       └── stringdb.py                # Fetch data dari STRING-DB
+│   ├── nocd/                              # Config Django (settings, urls, wsgi/asgi)
+│   ├── uploads/                           # File untuk demo aplikasi (dataset, model, hasil)
+│   ├── manage.py
+│   └── package.json                       # Skrip npm (dev, django, react, tailwind)
+├── requirements.txt                       # Dependensi Python (versi bisa berbeda)
+└── README.MD
+```
+
+## API Endpoint
+
+Semua endpoint menerima **POST**, di-backend `main/urls.py`.
+
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| POST | `/api/pilih-dataset` | Upload dataset (Excel) → fetch gambar interaksi dari STRING-DB + detail dataset |
+| POST | `/api/tabel-dataset` | Tampilkan dataset berupa tabel dengan pagination |
+| POST | `/api/input-model` | Upload model GNN (*.pth) → kembalikan config model |
+| POST | `/api/deteksi-komunitas` | Deteksi komunitas tumpang tindih (input model + threshold + require_score) → hasil & evaluasi |
+| POST | `/api/enrichment-analysis` | Enrichment analysis dari daftar gene pada komunitas |
+
+## How To Run
+
+### Untuk Developer (Wijdan)
+
+1. Aktifkan environment: `act`
+2. Masuk ke folder projek: `cd nocd`
+3. Jalankan server + frontend: `npm run dev` (menjalankan Django + React)
+4. Buka di browser: `http://127.0.0.1:8000/`
+
+> Skrip `npm run dev` ada di `nocd/package.json`. Ada juga `npm run dev:tailwind` untuk ikut watch Tailwind, `npm run django`, dan `npm run react`.
+
+### Untuk User
+
+```bash
+# 1. Clone repo
+git clone https://github.com/Simad9/academic-skripsi-program.git
+
+# 2. Masuk ke folder
+cd program-skripsi
+
+# 3. Buat environment (Python 3.11)
+python -3.11 -m venv venv
+
+# 4. Aktifkan environment
+.\venv\Scripts\activate
+
+# 5. Install semua library
+pip install -r requirements_v2.txt
+# NOTE: sesuaikan nama filenya (requirements_vX.txt), karena library diupdate kadang-kadang
+
+# 6. Masuk ke folder projek
+cd nocd
+
+# 7. Jalankan server + frontend
+npm run dev
+
+# 8. Buka di browser
+http://127.0.0.1:8000/
+```
+
+### Bonus (Developer Wijdan): Alias `act`
+
+Biar gampang aktifkan environment:
+
+```powershell
+notepad $PROFILE
+```
+
+Lalu tambahkan:
+```powershell
+set-alias act .\venv\Scripts\activate
+```
+
+Setelah itu setiap mau aktifkan environment cukup ketik `act`.
+
+## Cara Jalankan Model GNN Terpisah
+
+Workspace uji coba & pembuatan model ada di `temp/overlapping-community-detection/`:
+
+1. Masuk ke folder: `cd temp/overlapping-community-detection`
+2. Aktifkan environment khususnya: `.\venv\Scripts\activate` (atau `.venv` folder)
+3. Buka notebook skripsi (`skripsi*.ipynb`) di Jupyter untuk training / eksperimen
+4. Untuk detail lebih lanjut baca `README.md` di dalam folder tersebut
+
+> Repo ini adalah modifikasi dari repo milik [Shchur](https://github.com/shchur/overlapping-community-detection) yang dirombak untuk skripsi. \
+> Kebaruan : Pada penelitan tersebut Supervise sehingga saya ubah menjadi Unsupervise dengan ketentuan
+
+## Catatan Versi
+
+- **Python**: 3.11
+- **Torch**: 2.9.1
+- **Django**: 5.2.9
+- **React**: 19 + Vite 7
+- **Dependensi Python**: `requirements.txt`
+
+## Referensi
+
+- Repo asli: https://github.com/shchur/overlapping-community-detection
+- Jurnal: https://drive.google.com/file/d/1lPQqCwhOHDnfmLE4TcCrrSQRXOzfZYT6/view?usp=sharing
