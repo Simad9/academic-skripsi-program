@@ -64,8 +64,8 @@ def pilih_dataset(request):
     except Exception as e:
       return JsonResponse({"error": f"{str(e)}"}, status=500)    
 
-    # Buat jadi path dari server localhost:8000
-    img_path = f"http://localhost:8000{static(img_path)}"
+    # Buat jadi path dari server (mengikuti host request, aman untuk production)
+    img_path = request.build_absolute_uri(static(img_path))
 
     # === Ambil Data detail ===
     require_score = str(request.POST.get("require_score"))

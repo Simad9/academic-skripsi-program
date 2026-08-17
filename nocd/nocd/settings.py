@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,12 +21,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9%lq8vqr99_zdh!jscqg1sxo6gkougrptbt6y)rv2ouk3b#v^r'
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    'django-insecure-9%lq8vqr99_zdh!jscqg1sxo6gkougrptbt6y)rv2ouk3b#v^r',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS dari env (dipisah koma). Default untuk local dev.
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+    if host.strip()
+]
 
 
 # Application definition
@@ -40,24 +49,34 @@ INSTALLED_APPS = [
 
     'corsheaders', # django-cors-headers
     'main', # MAIN FOLDER
-    'django_browser_reload', # django-browser-reload
-
-
 ]
+
+# django-browser-reload hanya untuk development
+if DEBUG:
+    INSTALLED_APPS.append('django_browser_reload')
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', # cors middleware
 
     'django.middleware.security.SecurityMiddleware',
+]
+
+# whitenoise hanya untuk production (serve static files)
+if not DEBUG:
+    MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
+
+MIDDLEWARE += [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
+
+# django-browser-reload middleware hanya untuk development
+if DEBUG:
+    MIDDLEWARE.append('django_browser_reload.middleware.BrowserReloadMiddleware')
 
 ROOT_URLCONF = 'nocd.urls'
 
@@ -129,14 +148,19 @@ STATICFILES_DIRS = [
   BASE_DIR / "main/static"
 ]
 
+# Tempat hasil collectstatic (dipakai production/whitenoise)
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Izinkan permintaan dari server pengembangan React Anda
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-#     "http://127.0.0.1:5173", # Kadang-kadang browser menggunakan 127.0.0.1
-# ]
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS: di development izinkan semua origin (server React dev)
+# Di production pakai daftar origin dari env (dipisah koma), misal URL Vercel.
+CORS_ALLOW_ALL_ORIGINS = DEBUG
+CORS_ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
+    if origin.strip()
+]

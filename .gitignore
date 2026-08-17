@@ -124,3 +124,9 @@ media/
 # TAMBAHAN
 DEV_NOTES.MD
 overlapping-community-detection-raw/
+TASK.md
+
+# Runtime / uploads (ephemeral)
+nocd/uploads/
+nocd/main/code_ml/models/
+nocd/staticfiles/-raw/
