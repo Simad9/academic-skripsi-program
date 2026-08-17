@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+node_modules/
+frontend/
+venv/
+uploads/
+staticfiles/
+db.sqlite3
+main/code_ml/models/
+.git/
+.gitignore
+*.log

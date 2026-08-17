@@ -156,11 +156,16 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS: di development izinkan semua origin (server React dev)
+# CORS: di development izinkan semua origin (server React dev).
 # Di production pakai daftar origin dari env (dipisah koma), misal URL Vercel.
+# Default menyertakan origin dev Vite supaya local testing dengan DEBUG=False tetap jalan.
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 CORS_ALLOWED_ORIGINS = [
     origin.strip()
-    for origin in os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
+    for origin in os.environ.get(
+        'CORS_ALLOWED_ORIGINS',
+        'http://localhost:5173',
+        'http://127.0.0.1:5173',
+    ).split(',')
     if origin.strip()
 ]

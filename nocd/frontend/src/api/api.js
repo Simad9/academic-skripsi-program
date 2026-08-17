@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// Tentukan base URL API Anda
-const API_BASE_URL = "http://127.0.0.1:8000/api"; // Ganti dengan URL Django Anda
+// Base URL dari env (set di Vercel: VITE_API_URL), fallback ke server dev Django
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 
 // Buat instance axios untuk konfigurasi base URL, agar kode lebih bersih
 const apiClient = axios.create({
