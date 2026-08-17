@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: nocd
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DEBUG
+        value: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: .onrender.com
+      - key: USE_DATABASE
+        value: false

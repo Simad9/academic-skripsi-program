@@ -2,7 +2,8 @@
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1 \
+    DEBUG=false
 
 WORKDIR /app
 
@@ -18,5 +19,6 @@ COPY . .
 
 EXPOSE 8000
 
-# collectstatic + migrate saat boot, lalu jalankan gunicorn
-CMD ["sh", "-c", "python manage.py collectstatic --noinput && python manage.py migrate --noinput && gunicorn nocd.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 1 --threads 4 --timeout 120"]
+# collectstatic saat boot, lalu jalankan gunicorn
+# Tidak ada migrate karena tidak pakai database
+CMD ["sh", "-c", "python manage.py collectstatic --noinput && gunicorn nocd.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 1 --threads 4 --timeout 120"]

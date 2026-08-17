@@ -101,12 +101,22 @@ WSGI_APPLICATION = 'nocd.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Skip database jika tidak diperlukan (untuk deployment tanpa persistence)
+USE_DATABASE = os.environ.get('USE_DATABASE', 'false').lower() in ('true', '1', 'yes')
+
+if USE_DATABASE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.dummy',
+        }
+    }
 
 
 # Password validation
@@ -164,8 +174,8 @@ CORS_ALLOWED_ORIGINS = [
     origin.strip()
     for origin in os.environ.get(
         'CORS_ALLOWED_ORIGINS',
-        'http://localhost:5173',
-        'http://127.0.0.1:5173',
+        'http://localhost:5173,http://127.0.0.1:5173',
+        'https://academic-skripsi-program.vercel.app'
     ).split(',')
     if origin.strip()
 ]

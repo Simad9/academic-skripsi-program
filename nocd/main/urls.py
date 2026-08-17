@@ -2,6 +2,9 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
+    # Health check untuk Render
+    path('health', views.health_check, name='health_check'),
+    
     # Tampilan
     path('', views.index, name='home'),
 

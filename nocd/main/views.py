@@ -14,6 +14,10 @@ from .code_ml.stringdb import *
 from .code_ml.deteksiKomunitas import *
 from .code_ml.enrichmentAnalysis import *
 
+def health_check(request):
+    """Health check endpoint untuk Render deployment"""
+    return JsonResponse({"status": "healthy"}, status=200)
+
 def index(request):
   number_list = range(1, 30)
   context = {
