@@ -1,0 +1,11 @@
+{
+  "K": 3,
+  "lr": 0.005,
+  "weight_decay": 0.005,
+  "dropout": 0.3,
+  "threshold": 900,
+  "max_epochs": 3000,
+  "Q_overlap": 0.17039523191130856,
+  "val_loss": 0.1961434930562973,
+  "exp_id": 26
+}
